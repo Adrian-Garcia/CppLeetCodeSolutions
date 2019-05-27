@@ -28,8 +28,6 @@ bool lower(string word) {
 	int n = word.length();
 	bool flag = true;
 
-	falg
-
 	for (int i=0; i<n && flag; i++) 
 		if (isupper(word[i])) 
 			flag = false;
@@ -42,35 +40,52 @@ bool fullupper(string word) {
 	int n = word.length();
 	bool flag = true;
 
-	falg
-
 	for (int i=0; i<n && flag; i++) 
 		if (islower(word[i])) 
 			flag = false;
 
-	return flag;	
+	return flag;
+}
+
+bool upper(string word) {
+
+	int n = word.length();
+	bool flag = true;
+
+	if (n == 1)
+		return true;
+
+
+	for (int i=1; i<n && flag; i++) 
+		if (isupper(word[i])) 
+			flag = false;
+
+	return flag;
 }
 
 bool detectCapitalUse(string word) {
 
-	bool flag;
-	int n = word.length();
+	bool flag = false;
 	int counter = 0;
+	int i=0;
 
-	while (n[i] == ' ')
+	while (word[i] == ' ') {
+		flag = true;
 		counter++;
+		i++;
+	}
 
-	word.erase(0,counter);
+	if (flag)
+		word.erase(0,counter);
 
-	n = word.length();
-
-	if (isupper(word[0]) && isupper(word[1]))
-		flag = fullupper(word);
+	if (word.length() > 2)
+		if (isupper(word[0]) && isupper(word[1]))
+			flag = fullupper(word);
 
 	else if (isupper(word[0]))
 		flag = upper(word);
 
-	else if (islower(word[0])) 
+	if (islower(word[0])) 
 		flag = lower(word);
 
 	return flag;
@@ -78,7 +93,11 @@ bool detectCapitalUse(string word) {
 
 int main() {
 
+	string word = "fer";
 
+	(detectCapitalUse(word)) ?
+		cout << "Yes" << endl:
+		cout << "No"  << endl;
 
 	return 0;
 }
