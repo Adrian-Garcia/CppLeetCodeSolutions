@@ -63,6 +63,8 @@ using namespace std;
 
 int myAtoi(string str) {
 
+	cout << "1 " << str << endl;
+
 	int res = 0; 						// Result of the function
 	int size, limit;
 	int counter = 0;					// Auxiliar counter
@@ -78,23 +80,27 @@ int myAtoi(string str) {
 		i++;
 	} if (flag) str.erase(0, counter);
 
+	cout << "2 " << str << endl;
+
 	// If the beggining of the string is alphanumeric end function
 	if (isalpha(str[0]) && str[0] != '-') return 0;
 
-	i = (str[0] == '-') ? 1 : 0;		// To verify if num is negative
+	//Get if number is positive or negative
+	positive = (str[0] != '-') ? 
+		true : false;
+
+	i = (positive) ? 1 : 0;		// To verify if num is negative
 	flag = false;						// Restart flag
 	counter = 0;						// Restart counter 
 
 	// Get the first numbers, delete the aplhanumeric numbers
 	while(isdigit(str[i])) {
-		counter++;
 		flag = true;
+		counter++;
 		i++;
 	} if (flag) str.erase(counter, str.length()-1);
 
-	//Get if number is positive or negative
-	positive = (str[0] != '-') ? 
-		true : false;
+	cout << "3 " << str << endl;
 
 	// Get size of number in consideration of the '-' char
 	size = (positive) ?
@@ -107,10 +113,25 @@ int myAtoi(string str) {
 	//Restart counter
 	counter = 1;	
 
-	// Construct number
-	for (int i=str.length()-1; i>=limit; i--) {
-		res += (str[i]-48)*counter;
-		counter*=10;
+	// Case in which is a positive number
+	if (positive) {		
+
+		// Construct number
+		for (int i=str.length()-1; i>=0; i--) {
+			res += (str[i]-48)*counter;
+			counter *= 10;
+		}
+	}
+
+	// Case in which is a negative number
+	else {
+		for (int i=str.length(); i>0; i--) {
+			res += (str[i]-48)*counter;
+			counter *= 10;
+
+			cout << i << " ";
+			cout << str[i] << endl;
+		}
 	}
 
 	// Return the value
@@ -119,10 +140,10 @@ int myAtoi(string str) {
 
 int main() {
 
-	string str = "   42 asddd";
+	string str = "   -42 asddd";
 
 	int number = myAtoi(str);
-	cout << number << endl;
+	cout << endl << endl << number << endl;
 
 	return 0;
 }
