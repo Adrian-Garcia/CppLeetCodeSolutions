@@ -40,8 +40,9 @@ bool fullupper(string word) {
 	int n = word.length();
 	bool flag = true;
 
-	for (int i=0; i<n && flag; i++) 
-		if (islower(word[i])) 
+	for (int i=0; i<n && flag; i++)
+
+		if (islower(word[i]))
 			flag = false;
 
 	return flag;
@@ -55,9 +56,8 @@ bool upper(string word) {
 	if (n == 1)
 		return true;
 
-
 	for (int i=1; i<n && flag; i++) 
-		if (isupper(word[i])) 
+		if (isupper(word[i]))
 			flag = false;
 
 	return flag;
@@ -79,10 +79,9 @@ bool detectCapitalUse(string word) {
 		word.erase(0,counter);
 
 	if (word.length() >= 2) {
-		cout << "1" << endl;
 		if (isupper(word[0]) && isupper(word[1])) {
 			flag = fullupper(word);
-			cout << "2" << endl;
+			return flag;
 		}
 	}
 
