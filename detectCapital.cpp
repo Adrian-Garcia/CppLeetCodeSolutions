@@ -78,13 +78,17 @@ bool detectCapitalUse(string word) {
 	if (flag)
 		word.erase(0,counter);
 
-	if (word.length() > 2)
-		if (isupper(word[0]) && isupper(word[1]))
+	if (word.length() >= 2) {
+		cout << "1" << endl;
+		if (isupper(word[0]) && isupper(word[1])) {
 			flag = fullupper(word);
+			cout << "2" << endl;
+		}
+	}
 
-	else if (isupper(word[0]))
+	if (isupper(word[0])) 
 		flag = upper(word);
-
+ 	
 	if (islower(word[0])) 
 		flag = lower(word);
 
@@ -93,7 +97,7 @@ bool detectCapitalUse(string word) {
 
 int main() {
 
-	string word = "fer";
+	string word = "USA";
 
 	(detectCapitalUse(word)) ?
 		cout << "Yes" << endl:
