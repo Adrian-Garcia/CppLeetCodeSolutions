@@ -19,7 +19,9 @@
 Note:
 
 	Only the space character ' ' is considered as whitespace character.
-	Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231,  231 − 1]. If the numerical value is out of the range of representable values, INT_MAX (231 − 1) or INT_MIN (−231) is returned.
+	Assume we are dealing with an environment which could only store integers within the 32-bit signed 
+	integer range: [−231,  231 − 1]. If the numerical value is out of the range of representable values, 
+	INT_MAX (231 − 1) or INT_MIN (−231) is returned.
 
 Example 1:
 
@@ -61,9 +63,10 @@ using namespace std;
 
 int myAtoi(string str) {
 
-	int res, size, limit;
-	int counter = 0;
-	int i=0;
+	int res = 0; 						// Result of the function
+	int size, limit;
+	int counter = 0;					// Auxiliar counter
+	int i=0;							// Counter for indexes
 	
 	bool flag = false;					// Flag to end program of functions
 	bool positive = true;				// To know if number is positive or negative
@@ -105,11 +108,9 @@ int myAtoi(string str) {
 	counter = 1;	
 
 	// Construct number
-	for (int i=str.length(); i>limit; i--) {
-		res = (str[i]-48)*counter;
+	for (int i=str.length()-1; i>=limit; i--) {
+		res += (str[i]-48)*counter;
 		counter*=10;
-		cout << i << " ";
-		cout << str[i] << endl;
 	}
 
 	// Return the value
@@ -121,7 +122,7 @@ int main() {
 	string str = "   42 asddd";
 
 	int number = myAtoi(str);
-	// cout << number << endl;
+	cout << number << endl;
 
 	return 0;
 }
