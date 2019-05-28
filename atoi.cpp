@@ -89,7 +89,11 @@ int myAtoi(string str) {
 	positive = (str[0] != '-') ? 
 		true : false;
 
-	i = (positive) ? 1 : 0;		// To verify if num is negative
+	(positive) ?
+	 	cout << "Positive\n":
+		cout << "negative\n";
+
+	i = (positive) ? 0 : 1;		// To verify if num is negative
 	flag = false;						// Restart flag
 	counter = 0;						// Restart counter 
 
@@ -98,34 +102,22 @@ int myAtoi(string str) {
 		flag = true;
 		counter++;
 		i++;
-	} if (flag) str.erase(counter, str.length()-1);
+	} if (flag) str.erase(counter+1, str.length()-1);
 
 	cout << "3 " << str << endl;
-
-	// Get size of number in consideration of the '-' char
-	size = (positive) ?
-		str.length()-1 : str.length();
 
 	// Get when is the string going to count depending of its sign
 	limit = (positive) ?
 		0 : 1;	
 
 	//Restart counter
-	counter = 1;	
+	counter = 1;
 
 	// Case in which is a positive number
 	if (positive) {		
 
 		// Construct number
-		for (int i=str.length()-1; i>=0; i--) {
-			res += (str[i]-48)*counter;
-			counter *= 10;
-		}
-	}
-
-	// Case in which is a negative number
-	else {
-		for (int i=str.length(); i>0; i--) {
+		for (int i=str.length(); i>=0; i--) {
 			res += (str[i]-48)*counter;
 			counter *= 10;
 
@@ -134,13 +126,26 @@ int myAtoi(string str) {
 		}
 	}
 
+	// Case in which is a negative number
+	else {
+		for (int i=str.length()-1; i>0; i--) {
+			res += (str[i]-48)*counter;
+			counter *= 10;
+
+			cout << i << " ";
+			cout << str[i] << endl;
+		}
+
+		res *= -1;
+	}
+
 	// Return the value
 	return res;
 }
 
 int main() {
 
-	string str = "   -42 asddd";
+	string str = "   42 asddd";
 
 	int number = myAtoi(str);
 	cout << endl << endl << number << endl;
