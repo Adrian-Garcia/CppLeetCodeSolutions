@@ -58,8 +58,50 @@ Example 5:
 
 #include <iostream>
 #include <string>
+#include <limits.h>
 
 using namespace std;
+
+int strToInt(bool positive, string str) {
+
+	int counter = 1;
+	int res = 0;
+
+	// Case in which is a positive number
+	if (positive) {		
+
+		// Construct number
+		for (int i=str.length()-2; i>=0; i--) {
+			res += (str[i]-48)*counter;
+			counter *= 10;
+		}
+	}
+
+	// Case in which is a negative number
+	else {
+		
+		for (int i=str.length()-1; i>0; i--) {
+			res += (str[i]-48)*counter;
+			counter *= 10;
+		}
+
+		res = -res;
+	}
+
+	return res;
+}
+
+int closeMaxInt(string str) {
+
+	return 1;
+
+}
+
+int closeMinInt (string str) {
+
+	return 1;
+
+}
 
 int myAtoi(string str) {
 
@@ -100,29 +142,22 @@ int myAtoi(string str) {
 	limit = (positive) ?
 		0 : 1;	
 
-	//Restart counter
-	counter = 1;
+	//INT_MAX		 2147483647
+	//INT_MIN		-2147483648	
 
-	// Case in which is a positive number
-	if (positive) {		
+	// Return number if its length is less than INT_MAX or INT_MIN	
+	if (str.length() < 10) 
+		res = strToInt(positive, str);
 
-		// Construct number
-		for (int i=str.length()-2; i>=0; i--) {
-			res += (str[i]-48)*counter;
-			counter *= 10;
-		}
-	}
+	// Positive and smaller tha 11
+	else if (positive && str.length() <= 10)
+		res = closeMaxInt(str);
 
-	// Case in which is a negative number
-	else {
-		
-		for (int i=str.length()-1; i>0; i--) {
-			res += (str[i]-48)*counter;
-			counter *= 10;
-		}
+	else if (!positive && str.length() <= 11)
+		res = closeMinInt(str);
 
-		res = -res;
-	}
+	else 
+		res = (positive) ? INT_MAX : INT_MIN;
 
 	// Return the value
 	return res;
@@ -133,6 +168,8 @@ int main() {
 	string str = "   42 asddd";
 
 	int number = myAtoi(str);
+
+	cout << number << endl;
 
 	return 0;
 }
