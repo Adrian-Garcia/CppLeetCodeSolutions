@@ -93,25 +93,46 @@ int strToInt(bool positive, string str) {
 
 int closeMaxInt(string str) {
 
-	return 1;
+	int counter = 1;
+	double res = 0;
 
+	// Construct number
+	for (int i=str.length()-2; i>=0; i--) {
+		res += (str[i]-48)*counter;
+		counter *= 10;
+	}
+
+	return (res <= INT_MAX) ?
+		(int)res : INT_MAX;
 }
 
 int closeMinInt (string str) {
 
-	return 1;
+	int counter = 1;
+	double res = 0;
 
+	// Construct number
+	for (int i=str.length()-1; i>0; i--) {
+		res += (str[i]-48)*counter;
+		counter *= 10;
+	} res = -res;
+
+	return (res >= INT_MIN) ?
+		(int)res : INT_MIN;
 }
 
 int myAtoi(string str) {
 
+	cout << "1 " << endl; 
+
 	int res = 0; 						// Result of the function
-	int size, limit;
 	int counter = 0;					// Auxiliar counter
 	int i=0;							// Counter for indexes
 	
 	bool flag = false;					// Flag to end program of functions
 	bool positive = true;				// To know if number is positive or negative
+
+	cout << "2 " << endl;
 
 	// Delete initial blankspaces 
 	while (str[i] == ' ') {
@@ -120,6 +141,8 @@ int myAtoi(string str) {
 		i++;
 	} if (flag) str.erase(0, counter);
 
+	cout << "3 " << endl;
+
 	// If the beggining of the string is alphanumeric end function
 	if (isalpha(str[0]) && str[0] != '-') return 0;
 
@@ -127,23 +150,25 @@ int myAtoi(string str) {
 	positive = (str[0] != '-') ? 
 		true : false;
 
+	cout << "4 " << endl;
+
 	i = (positive) ? 0 : 1;		// To verify if num is negative
 	flag = false;						// Restart flag
 	counter = 0;						// Restart counter 
+
+	cout << "5 " << endl;
 
 	// Get the first numbers, delete the aplhanumeric numbers
 	while(isdigit(str[i])) {
 		flag = true;
 		counter++;
 		i++;
-	} if (flag) str.erase(counter+1, str.length()-1);
+	} 
 
-	// Get when is the string going to count depending of its sign
-	limit = (positive) ?
-		0 : 1;	
+	if (flag && !positive) str.erase(counter+1, str.length()-1);
+	if (flag && positive) str.erase(counter, str.length()-1);
 
-	//INT_MAX		 2147483647
-	//INT_MIN		-2147483648	
+	cout << str << " " << endl;
 
 	// Return number if its length is less than INT_MAX or INT_MIN	
 	if (str.length() < 10) 
@@ -165,11 +190,11 @@ int myAtoi(string str) {
 
 int main() {
 
-	string str = "   42 asddd";
+	string str = "      25  asd asd asd asd";
 
 	int number = myAtoi(str);
 
-	cout << number << endl;
+	cout << endl << endl << number << endl;
 
 	return 0;
 }
