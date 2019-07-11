@@ -63,7 +63,7 @@ string longestCommonPrefix(vector<string>& strs) {
 			}
 		}
 		
-		lcp.insert(i, ToStr(aux));	
+		lcp.insert(i, ToStr(aux));
 	}	
 	
 	return lcp;
