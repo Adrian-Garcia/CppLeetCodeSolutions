@@ -208,7 +208,7 @@ void print(ListNode *head) {
 	}
 }
 
-ListNode* delUnique(ListNode *head) {
+ListNode* delDuplicates(ListNode *head) {
 	
 	cout << endl;
 	
@@ -273,7 +273,7 @@ int main() {
 	}
 	
 	print(head);
-	head = delUnique(head);
+	head = delDuplicates(head);
 	print(head);
 	
 	return 0;
