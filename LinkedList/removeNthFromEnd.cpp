@@ -25,6 +25,39 @@ struct ListNode {
 
 ListNode* removeNthFromEnd(ListNode* head, int n) {
 
+	if (n == 0)
+		return head;
+
+	ListNode *curr = head;
+	ListNode *aux;
+	int count = 0;
+
+	while (curr != NULL) {
+		count++;
+		curr = curr->next;
+	}
+
+	curr = head;
+
+	if (n >= count) {
+
+		aux = head;
+		head = head->next;
+		aux->next = NULL;
+		delete aux;
+
+	} else {
+
+		for (int i=0; i<count-n-1; i++) 
+			curr = curr->next;
+
+		aux = curr->next;
+		curr->next = curr->next->next;
+		aux->next = NULL;
+		delete aux;
+	}
+
+	return head;
 }
 
 void print(ListNode *head) {
@@ -58,6 +91,7 @@ int main() {
 
 	print(head);
 	head = removeNthFromEnd(head, 2);
+	cout << endl;
 	print (head);
 
 	return 0;
