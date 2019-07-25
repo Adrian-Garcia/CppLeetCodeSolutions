@@ -34,11 +34,11 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
 	ListNode *curr2 = l2;
 	ListNode *curr3;
 
-	unsigned long int num1 = 0;
-	unsigned long int num2 = 0;
-	unsigned long int num3;
+	unsigned long long int num1 = 0;
+	unsigned long long int num2 = 0;
+	unsigned long long int num3;
 
-	unsigned long int adder = 1;
+	unsigned long long int adder = 1;
 
 	while (curr1 != NULL && curr2 != NULL) {
 		
@@ -75,12 +75,6 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
 
 	num3 = num1 + num2;
 
-	// cout << endl << endl;
-	// cout << "num1: " << num1 << endl;
-	// cout << "num2: " << num2 << endl;
-	// cout << "num3: " << num3 << endl;
-	// cout << endl << endl;
-
 	if (num3 == 0) {
 		list3.push(0);
 	}
@@ -90,12 +84,9 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
 		while (num3 > 0) {
 	
 			list3.push(num3 % 10);
-			
-			// cout << num3%10;
 			num3/=10;
 		}
 		
-		// cout << endl;
 	}
 	
 	ListNode *l3 = new ListNode(list3.front());
@@ -132,16 +123,16 @@ int main() {
 	
 	l1 = new ListNode(2);
 	a1 = l1;
-	a1->next = new ListNode(4);
+	a1->next = new ListNode(0);
 	a1 = a1->next;
-	a1->next = new ListNode(3);
+	a1->next = new ListNode(2);
 	a1 = a1->next;
 
-	l2 = new ListNode(5);
+	l2 = new ListNode(1);
 	a2 = l2;
-	a2->next = new ListNode(6);
+	a2->next = new ListNode(0);
 	a2 = a2->next;
-	a2->next = new ListNode(4);
+	a2->next = new ListNode(3);
 	a2 = a2->next;
 	
 	cout << "List1: ";
