@@ -41,6 +41,10 @@ ListNode* rotateRight(ListNode* head, int k) {
 	if (k == 0)
 		return head; 
 
+	// End function if linkedList is empty
+	if (head == NULL)
+		return head;
+
 	ListNode *curr = head;
 	ListNode *newHead;
 	ListNode *aux;
@@ -54,8 +58,12 @@ ListNode* rotateRight(ListNode* head, int k) {
 		curr = curr->next;
 	}
 
+	// End function if the LinkedList have one node
+	if (size == 1)
+		return head;
+
 	// Reduce k
-	while (size > k) 
+	while (size < k) 
 		k-=size;
 
 	// End function if no need to move anything
@@ -75,7 +83,7 @@ ListNode* rotateRight(ListNode* head, int k) {
 	// push numbers back and delete unused linkedlist
 	while (curr != NULL) {
 		
-		nums.push(curr->val)
+		nums.push(curr->val);
 		aux = curr;
 		curr = curr->next;
 		aux->next = NULL;
@@ -124,17 +132,17 @@ int main() {
 
 	aux->next = new ListNode(2);
 	aux = aux->next;
-	aux->next = new ListNode(3);
-	aux = aux->next;
-	aux->next = new ListNode(4);
-	aux = aux->next;
-	aux->next = new ListNode(5);
-	aux = aux->next;
+//	aux->next = new ListNode(3);
+//	aux = aux->next;
+//	aux->next = new ListNode(4);
+//	aux = aux->next;
+//	aux->next = new ListNode(5);
+//	aux = aux->next;
 
 	print(head);
 	head = rotateRight(head, 2);
-	// cout << endl;
-	// print (head);
+	cout << endl;
+	print (head);
 
 	return 0;
 }
