@@ -26,8 +26,8 @@ struct ListNode {
 
 ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
 
-	stack<int> list1;
-	stack<int> list2;
+	queue<int> list1;
+	queue<int> list2;
 	queue<int> list3;
 
 	ListNode *curr1 = l1;
@@ -60,7 +60,7 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
 	}
 
 	while (!list1.empty()) {
-		num1 += adder * list1.top();
+		num1 += adder * list1.front();
 		adder*=10;
 		list1.pop();
 	}
@@ -68,33 +68,34 @@ ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
 	adder = 1;
 
 	while (!list2.empty()) {
-		num2 += adder * list2.top();
+		num2 += adder * list2.front();
 		adder*=10;
 		list2.pop();
 	}
 
 	num3 = num1 + num2;
 
-	cout << endl << endl << num1 << " " << num2 << " " << num3 << endl;
+	// cout << endl << endl;
+	// cout << "num1: " << num1 << endl;
+	// cout << "num2: " << num2 << endl;
+	// cout << "num3: " << num3 << endl;
+	// cout << endl << endl;
 
 	if (num3 == 0) {
 		list3.push(0);
-		cout << "Si se lee esto, Fer no es la mas hermosa" << endl;
 	}
 	
 	else {
-		
-		cout << "Si se lee esto, Fer es la mas hermosa" << endl;
 		
 		while (num3 > 0) {
 	
 			list3.push(num3 % 10);
 			
-			cout << num3%10;
+			// cout << num3%10;
 			num3/=10;
 		}
 		
-		cout << endl;
+		// cout << endl;
 	}
 	
 	ListNode *l3 = new ListNode(list3.front());
@@ -129,19 +130,19 @@ int main() {
 
 	cout << "addTwoNumbers" << endl;
 	
-	l1 = new ListNode(1);
+	l1 = new ListNode(2);
 	a1 = l1;
-	a1->next = new ListNode(8);
-	// a1 = a1->next;
-	// a1->next = new ListNode(3);
-	// a1 = a1->next;
+	a1->next = new ListNode(4);
+	a1 = a1->next;
+	a1->next = new ListNode(3);
+	a1 = a1->next;
 
-	l2 = new ListNode(0);
-	// a2 = l2;
-	// a2->next = new ListNode(6);
-	// a2 = a2->next;
-	// a2->next = new ListNode(4);
-	// a2 = a2->next;
+	l2 = new ListNode(5);
+	a2 = l2;
+	a2->next = new ListNode(6);
+	a2 = a2->next;
+	a2->next = new ListNode(4);
+	a2 = a2->next;
 	
 	cout << "List1: ";
 	print(l1);
