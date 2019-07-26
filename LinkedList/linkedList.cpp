@@ -8,15 +8,15 @@ struct ListNode {
 	ListNode(int x) : val(x), next(NULL) {}
 };
 
-ListNode addFirst(ListNode head, int num) {
+ListNode* addFirst(ListNode *head, int num) {
 
-	newHead = new ListNode(num);
+	ListNode *newHead = new ListNode(num);
 	newHead->next = head;
 
 	return newHead;
 }
 
-ListNode add(ListNode head, int num, int pos) {
+ListNode* add(ListNode *head, int num, int pos) {
 
 	if (pos == 0)
 		return addFirst(head, num);
@@ -31,9 +31,9 @@ ListNode add(ListNode head, int num, int pos) {
 
 			if (i == pos) {
 				
-				save = curr->next;
+				save = curr->next;					
 				curr->next = new ListNode(num);
-				curr = curr->next
+				curr = curr->next;
 				curr->next = save;
 
 				return head;
@@ -48,9 +48,9 @@ ListNode add(ListNode head, int num, int pos) {
 	}
 }
 
-void addLast(ListNode head, int num) {
+void addLast(ListNode *head, int num) {
 
-	ListNode curr = head;
+	ListNode *curr = head;
 
 	while (curr->next != NULL) {
 		curr = curr->next;
@@ -59,44 +59,7 @@ void addLast(ListNode head, int num) {
 	curr->next = new ListNode(num);
 }
 
-ListNode del(ListNode head, int pos) {
-
-	ListNode *curr = head;
-	ListNode *save, *aux;
-
-	int i=0; 
-
-	if (pos == 0) {
-		return deleteFirst(head);
-	}
-
-	while (curr != NULL) {
-
-		if (i==pos-1) 
-			break;	
-
-		i++;
-		curr = curr->next;
-	}
-
-	if (curr->next == NULL) {
-		return head;
-	}
-
-	else if (curr->next->next == NULL) {
-		delete curr->next;
-		return head;
-	}
-
-	else {
-		curr->next->next = save;
-		aux = curr->next;
-		delete aux;
-		curr->next = save;
-	}
-}
-
-ListNode deleteFirst(ListNode head) {
+ListNode* deleteFirst(ListNode *head) {
 
 	ListNode *curr = head;
 	ListNode *aux;
@@ -109,32 +72,81 @@ ListNode deleteFirst(ListNode head) {
 	return curr;
 }
 
-void deleteLast(ListNode head) {
+ListNode* del(ListNode *head, int pos) {
 
 	ListNode *curr = head;
+	ListNode *save, *aux;
+	
+	int i=0; 
+	bool found = false;
 
-	while (curr->next = NULL) {
+	if (pos == 0) {
+		return deleteFirst(head);
+	}
+	
+	aux = curr;
+	curr = curr->next;
+	i++;
+
+	while (curr != NULL)  {
+
+		if (i == pos) {
+			found = true;
+			break;	
+		}
+
+		i++;
 		curr = curr->next;
+		aux = aux->next;
 	}
 
+	if (!found)
+		return head;
+
+	else if (curr->next == NULL) {
+
+		delete curr;
+		return head;
+	}
+	
+	else {
+		
+		aux->next = aux->next->next;
+		delete curr;
+		
+		return head;
+	}
+}
+
+ListNode* deleteLast(ListNode *head) {
+	
+	ListNode *curr = head;
+	ListNode *last;
+	
+	while (curr->next != NULL) {
+		last = curr;
+		curr = curr->next;
+	} 
+
+	last->next = NULL;
 	delete curr;
+	return head;
 }
 
-void deleteAll(ListNode head) {
+void deleteAll(ListNode *head) {
 
 	ListNode *curr = head;
-	ListNode *aux;
-
-	while (curr != NULL) {
-		
-		aux = curr;
+	ListNode *prev;
+	
+	while(curr != NULL) {	
+		prev = curr;
 		curr = curr->next;
-		
-		delete aux;
-	}
+		delete prev;
+		prev->next = NULL;
+	}	
 }
 
-int getSize(ListNode head) {
+int getSize(ListNode *head) {
 
 	ListNode *curr = head;
 	int size = 0;
@@ -144,11 +156,11 @@ int getSize(ListNode head) {
 		curr = curr->next;
 		size++;
 	}
-
+	
 	return size;
 }
 
-int get(int pos) {
+int get(ListNode *head, int pos) {
 
 	ListNode *curr = head;
 	int i=0;
@@ -159,14 +171,14 @@ int get(int pos) {
 			return curr->val;
 		}
 
-		curr = curr->val; 
+		curr = curr->next; 
 		i++;
 	}
 
 	return -1;
 }
 
-bool set(ListNode head, int newVal, int pos) {
+bool set(ListNode *head, int newVal, int pos) {
 
 	ListNode *curr = head;
 	int i=0;
@@ -185,7 +197,7 @@ bool set(ListNode head, int newVal, int pos) {
 	return false;
 }
 
-void print(ListNode head) {
+void print(ListNode *head) {
 
 	ListNode *curr = head;
 
@@ -196,32 +208,73 @@ void print(ListNode head) {
 	}
 }
 
+ListNode* delDuplicates(ListNode *head) {
+	
+	cout << endl;
+	
+	ListNode *curr = head;
+	ListNode *prev = curr;
+	ListNode *aux = head;
+	int firstVal = curr->val;	
+	bool flag = false;
+	
+	curr = curr->next;	
+	while (firstVal == curr->val && curr->next != NULL) {
+		
+		head = head->next;
+		delete aux;
+		aux = head;
+		
+		prev = curr;
+		curr = curr->next;
+	}
+	
+	while (curr != NULL) {
+		
+		if (prev->val == curr->val) {
+			prev->next = curr->next;
+			aux = curr;
+			curr = curr->next;
+			delete aux;
+			flag = true;
+		}
+		
+		else {
+			
+			prev = curr;
+			curr = curr->next;
+		}
+	}
+	
+	return head;
+}
+
 int main() {
 	
-	ListNode *prueba, *aux, *dos;
+	ListNode *head, *aux, *dos;
 
 	int n;		// Numero total de Nodos
 	int num;	// Numero de un Nodo
 
-	cout << "LinkedList"
-	cin >> n >> num;
+	cout << "LinkedList" << endl;
+	cout << "Numero de Nodos: ";
+	cin >> n;
 	
-	prueba = new ListNode(num);
-	aux = prueba;
+	cout << "\nLinked List: ";
+	cin >> num;
+	
+	head = new ListNode(num);
+	aux = head;
 
-	for (int i = 0; i < n-1; i++) {
+	for (int i=0; i<n-1; i++) {
 		cin >> num;
 		aux->next = new ListNode(num);
 		aux = aux->next;
 	}
-
-	dos = deleteUnique(prueba);
-	aux = dos;
 	
-	while (aux != NULL) {
-		cout << aux->val << " ";
-		aux = aux->next;
-	}
+	print(head);
+	head = delDuplicates(head);
+	print(head);
 	
 	return 0;
 }
