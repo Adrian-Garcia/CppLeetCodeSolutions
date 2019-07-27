@@ -28,7 +28,6 @@
 		All the tilt values won't exceed the range of 32-bit integer.
 */
 #include <iostream>
-#include <queue>
 #include <cstdlib>
 
 using namespace std;
@@ -69,6 +68,7 @@ void getTilt(TreeNode* r, int &sum) {
 		return;
 
 	getTilt(r->left, sum);
+	getTilt(r->right, sum);
 
 	int valLeft = (r->left != NULL) ?
 		r->left->val : 0;
@@ -77,16 +77,12 @@ void getTilt(TreeNode* r, int &sum) {
 		r->right->val : 0;
 
 	sum += abs(valLeft - valRight);
-
-	getTilt(r->right, sum);
 }
 
 int findTilt(TreeNode* root) {
 	
 	int sum = 0;
-
 	getTilt(root, sum);
-
 	return sum;
 }
 
