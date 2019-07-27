@@ -62,7 +62,7 @@ void preOrder(TreeNode *r) {
 void inOrder(TreeNode *r) {
 
 	if (r != NULL) {
-		inOrder(r->left)
+		inOrder(r->left);
 		cout << r->val << " ";
 		inOrder(r->right);
 	}
@@ -124,10 +124,30 @@ int height(TreeNode *r) {
 	int left = height(r->left);
 	int right = height(r->right);
 
-	return 1 + (izq > der ? izq : der);
+	return 1 + (left > right ? left : right);
 }
 
 int main() {
+
+	TreeNode *root = new TreeNode(5);
+
+	add(root, 2);
+	add(root, 4);
+	add(root, 7);
+	add(root, 9);
+	add(root, 6);
+	add(root, 1);
+	add(root, 0);
+	add(root, 8);
+	add(root, 1);
+
+	preOrder(root);
+	cout << endl;
+	inOrder(root);
+	cout << endl;
+	postOrder(root);
+	cout << endl;
+	levels(root);
 
 	return 0;
 }
