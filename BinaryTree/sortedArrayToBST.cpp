@@ -74,30 +74,53 @@ void levels(TreeNode *root) {
 	}
 }
 
-void route(vector<int> v, int low, int mid, int big, vector<bool> &counter) {
+void route(vector<int> v, int low, int mid, int big, vector<bool> &counter, queue<int> &q) {
 	
 	mid = (big+low)/2;
 
 	if (counter[mid])
 		return; 
 
-	cout << v[mid] << " ";
-
+	q.push(v[mid]);
 	counter[mid] = true;
 
 	route(v, low, mid, mid, counter);
 	route(v, mid, mid, big, counter);
 }
 
-void binaryOrder(vector<int> v) {
+void binaryOrder(vector<int> v, queue<int> &q) {
 
 	int low = 0;
 	int big = v.size();
 	int mid = (big+low)/2;
-
 	std::vector<bool> counter(v.size(), false);
+	
+	route(v, low, mid, big, counter, q);
+}
 
-	route(v, low, mid, big, counter);
+TreeNode* sortedArrayToBST(vector<int>& nums) {
+    
+    queue<TreeNode*> nodes;
+    TreeNode *root;
+	queue<int> q;
+
+	binaryOrder(nums, q);
+
+	// q 		3 2 1 4 7 6 8
+	// nodes	5
+
+	root = new TreeNode(q.front());
+	nodes.push(root)
+	q.pop();
+
+	while (!nodes.empty()) {
+
+		if (!q.empty())
+			nodes.front()->left = new TreeNode(q.front());
+
+		nodes.pop();
+		q.pop();
+	}
 }
 
 int main() {
