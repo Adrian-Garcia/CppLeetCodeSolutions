@@ -118,7 +118,7 @@ int whatLevelAmI(TreeNode *root, int data) {
 
 int height(TreeNode *r) {
 
-	if (r == NULL)
+	if (r == NULL) 
 		return 0;
 
 	int left = height(r->left);
@@ -141,6 +141,9 @@ int main() {
 	add(root, 8);
 	add(root, 1);
 
+	cout << search(root, 0) << endl;
+	cout << whatLevelAmI(root, 9) << endl;
+	cout << height(root) << endl;
 	preOrder(root);
 	cout << endl;
 	inOrder(root);
