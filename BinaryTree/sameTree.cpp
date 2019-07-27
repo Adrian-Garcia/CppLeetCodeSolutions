@@ -70,7 +70,64 @@ void add(TreeNode *root, int data) {
 	}
 }
 
+void validateTrees(TreeNode* p, TreeNode* q, bool &flag) {
+
+	if (p == NULL && q == NULL)
+		return; 
+
+	if ((p == NULL && q != NULL) || (p != NULL && q == NULL)) {
+		flag = false;
+		return;
+	}
+
+	if (p->val != q->val) {
+		flag = false;
+		return;
+	}
+
+	validateTrees(p->left, q->left, flag);
+	validateTrees(p->right, q->right, flag);
+}
+
+bool isSameTree(TreeNode* p, TreeNode* q) {
+
+	bool flag = true;
+	validateTrees(p, q, flag);
+	return flag;
+}
+
 int main() {
+
+	TreeNode *p = new TreeNode(5);
+	TreeNode *q = new TreeNode(5);
+
+	add(p, 2);
+	add(q, 2);
+
+	add(p, 5);
+	add(q, 1);
+
+	add(p, 3);
+	add(q, 3);
+
+	add(p, 7);
+	add(q, 7);
+
+	add(p, 9);
+	add(q, 9);
+
+	add(p, 8);
+	add(q, 8);
+
+	add(p, 4);
+	add(q, 4);
+
+	bool flag = isSameTree(p, q);
+
+	if (flag)
+		cout << "Fer me caso contigo si es verdadero";
+	else
+		cout << "Chale";
 
 	return 0;
 }
