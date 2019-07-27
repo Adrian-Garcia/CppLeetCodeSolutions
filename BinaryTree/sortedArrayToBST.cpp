@@ -20,6 +20,7 @@ Example:
 */
 #include <iostream>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -53,15 +54,60 @@ void add(TreeNode *root, int data) {
 	}
 }
 
+void levels(TreeNode *root) {
+
+	queue<TreeNode*> nodes;
+
+	nodes.push(root);
+
+	while (!nodes.empty()) {
+
+		if (nodes.front()->left != NULL)
+			nodes.push(nodes.front()->left);
+
+		if (nodes.front()->right != NULL)
+			nodes.push(nodes.front()->right);
+
+		cout << nodes.front()->val << " ";
+
+		nodes.pop();
+	}
+}
+
+void route(vector<int> v, int low, int mid, int big, vector<bool> &counter) {
+	
+	mid = (big+low)/2;
+
+	if (counter[mid])
+		return; 
+
+	cout << v[mid] << " ";
+
+	counter[mid] = true;
+
+	route(v, low, mid, mid, counter);
+	route(v, mid, mid, big, counter);
+}
+
+void binaryOrder(vector<int> v) {
+
+	int low = 0;
+	int big = v.size();
+	int mid = (big+low)/2;
+
+	std::vector<bool> counter(v.size(), false);
+
+	route(v, low, mid, big, counter);
+}
+
 int main() {
 
-	std::vector<char> v;
+	std::vector<int> v;
 
-	for (int i=1; i<=5; i++)
+	for (int i=1; i<=8; i++)
 		v.push_back(i);
 
-	for (int i=0; i<v.size(); i++)
-		cout << v << " ";
+	binaryOrder(v);
 
 	return 0;
 }
