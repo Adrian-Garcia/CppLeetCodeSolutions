@@ -68,12 +68,10 @@ void postOrder(TreeNode *r) {
 
 void build(TreeNode *&r, vector<int>& pre, vector<int>& post, int &i, int &j, bool &finish) {
 
-	cout << 2 << endl;
-
 	if (finish)
 		return;
 
-	if (i == pre.size() || finish) {
+	if (i >= pre.size()) {
 		finish = true;
 		return; 
 	}
@@ -81,11 +79,9 @@ void build(TreeNode *&r, vector<int>& pre, vector<int>& post, int &i, int &j, bo
 	if (pre[i] != post[j]) {
 
 		r->left = new TreeNode(pre[i]);
+		cout << i++ << " ";
 		build(r->left, pre, post, i, j, finish);
 		r->right = new TreeNode(pre[i]);
-		i++;
-		build(r->right, pre, post, i, j, finish);
-		i++;
 	}
 
 	else {
@@ -98,16 +94,12 @@ void build(TreeNode *&r, vector<int>& pre, vector<int>& post, int &i, int &j, bo
 
 TreeNode* constructFromPrePost(vector<int>& pre, vector<int>& post) {
 
-	cout << 1 << endl;
-
-	int i=0;
+	int i=1;
 	int j=0;
-
-	TreeNode *root = new TreeNode(pre[i]);
-	i++;
-
-	bool finish = false;
 	
+	bool finish = false;
+
+	TreeNode *root = new TreeNode(pre[i-1]);
 	build(root, pre, post, i, j, finish);
 
 	return root;
@@ -137,7 +129,9 @@ int main() {
 
 	root = constructFromPrePost(pre, post);
 
+	cout << endl;
 	preOrder(root);
+	cout << endl;
 	postOrder(root);
 
 	return 0;
