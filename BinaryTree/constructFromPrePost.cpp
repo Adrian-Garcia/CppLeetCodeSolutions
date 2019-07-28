@@ -48,11 +48,97 @@ void add(TreeNode *root, int data) {
 	}
 }
 
+void preOrder(TreeNode *r) {
+	
+	if (r != NULL) {
+		cout << r->val << " ";
+		preOrder(r->left);
+		preOrder(r->right);
+	}
+}
+
+void postOrder(TreeNode *r) {
+
+	if (r != NULL) {
+		postOrder(r->left);
+		postOrder(r->right);
+		cout << r->val << " ";
+	}
+}
+
+void build(TreeNode *&r, vector<int>& pre, vector<int>& post, int &i, int &j, bool &finish) {
+
+	cout << 2 << endl;
+
+	if (finish)
+		return;
+
+	if (i == pre.size() || finish) {
+		finish = true;
+		return; 
+	}
+
+	if (pre[i] != post[j]) {
+
+		r->left = new TreeNode(pre[i]);
+		build(r->left, pre, post, i, j, finish);
+		r->right = new TreeNode(pre[i]);
+		i++;
+		build(r->right, pre, post, i, j, finish);
+		i++;
+	}
+
+	else {
+
+		r->left = new TreeNode(pre[i]);
+		i++; 
+		j++;
+	}
+}
+
 TreeNode* constructFromPrePost(vector<int>& pre, vector<int>& post) {
 
+	cout << 1 << endl;
+
+	int i=0;
+	int j=0;
+
+	TreeNode *root = new TreeNode(pre[i]);
+	i++;
+
+	bool finish = false;
+	
+	build(root, pre, post, i, j, finish);
+
+	return root;
 }
 
 int main() {
+
+	vector<int> pre;
+	vector<int> post;
+	TreeNode* root;
+
+	pre.push_back(1);
+	pre.push_back(2);
+	pre.push_back(4);
+	pre.push_back(5);
+	pre.push_back(3);
+	pre.push_back(6);
+	pre.push_back(7);
+
+	post.push_back(4);
+	post.push_back(5);
+	post.push_back(2);
+	post.push_back(6);
+	post.push_back(7);
+	post.push_back(3);
+	post.push_back(1);
+
+	root = constructFromPrePost(pre, post);
+
+	preOrder(root);
+	postOrder(root);
 
 	return 0;
 }
