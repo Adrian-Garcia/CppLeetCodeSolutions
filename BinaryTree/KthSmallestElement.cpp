@@ -68,8 +68,65 @@ void add(TreeNode *root, int data) {
 	}
 }
 
+void preOrder(TreeNode *r) {
+	
+	if (r != NULL) {
+		cout << r->val << " ";
+		preOrder(r->left);
+		preOrder(r->right);
+	}
+}
+
+void inOrder(TreeNode *r) {
+
+	if (r != NULL) {
+		inOrder(r->left);
+		cout << r->val << " ";
+		inOrder(r->right);
+	}
+}
+
+void inOrderCounter(TreeNode *r, int k, int &counter, int &val, bool &flag) {
+
+	if (r != NULL && !flag) {
+
+		inOrderCounter(r->left, k, counter, val, flag);
+		
+		counter++;
+		if (counter == k && !flag) {
+			flag = true;
+			val = r->val;
+			return;
+		}
+		
+		inOrderCounter(r->right, k, counter, val, flag);
+	}
+}
+
+int kthSmallest(TreeNode* root, int k) {
+	
+	int val;
+	int counter = 0;
+	bool flag = false;
+
+	inOrderCounter(root, k, counter, val, flag);
+
+	return val;
+}
+
 int main() {
 
+	TreeNode *root = new TreeNode(5);
+
+	add(root, 3);
+	add(root, 6);
+	add(root, 2);
+	add(root, 4);
+	add(root, 1);
+
+	// inOrder(root);
+
+	cout << kthSmallest(root, 3) << endl;
 
 	return 0;
 }
