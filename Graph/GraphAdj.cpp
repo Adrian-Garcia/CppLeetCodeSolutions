@@ -24,8 +24,6 @@ void readListAdj(vector<vector<int> > &listAdj, int e) {
 
 void printListAdj(vector<vector<int> > &listAdj) {
 
-	cout << endl;
-
 	for(int i=0; i<listAdj.size(); i++) {
 		
 		cout << i+1 << " -> ";
@@ -43,8 +41,6 @@ void printListAdj(vector<vector<int> > &listAdj) {
 
 void listAdjDFS(vector<vector<int> > &listAdj, int v) {
 
-	cout << endl;
-
 	stack<int> s;
 	vector<bool> status(v, false);
 	int data;
@@ -56,15 +52,15 @@ void listAdjDFS(vector<vector<int> > &listAdj, int v) {
 		data = s.top();
 		s.pop();
 
-		if (!status[data]) {
+		if (status[data]) 
+			continue;
 
-			cout << data+1 << " ";
-			status[data] = true;
+		cout << data+1 << " ";
+		status[data] = true;
 
-			for (int i=listAdj[data].size()-1; i>=0; i--) 
-				if (!status[listAdj[data][i]])
-					s.push(listAdj[data][i]);
-		}
+		for (int i=listAdj[data].size()-1; i>=0; i--) 
+			if (!status[listAdj[data][i]])
+				s.push(listAdj[data][i]);
 	}
 
 	cout << endl;
@@ -89,7 +85,6 @@ void listAdjBFS(vector<vector<int> > &listAdj, int v) {
 		cout << data+1 << " ";
 		status[data] = true;
 
-	//  for (int i=listAdj[data].size()-1; i>=0; i--)
 		for (int i=0; i<listAdj[data].size(); i++)	
 			if (!status[listAdj[data][i]])
 				q.push(listAdj[data][i]);	 
@@ -108,9 +103,13 @@ int main() {
 	vector<vector<int> > listAdj(v);
 
 	readListAdj(listAdj, e);
+	cout << endl;
 	printListAdj(listAdj);
+	cout << endl;
 	listAdjDFS(listAdj, v);
+	cout << endl;
 	listAdjBFS(listAdj, v);
+	cout << endl;
 
 	return 0;
 }
