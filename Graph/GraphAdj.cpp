@@ -1,15 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <queue>
 
 using namespace std;
-
-// struct GraphNode {
-// 	int val;
-// 	bool check = false;
-// 	vector<GraphNode*> adj;
-// 	GraphNode(int x) : val(x), adj(0, NULL) {}
-// };
 
 void readListAdj(vector<vector<int> > &listAdj, int e) {
 
@@ -76,6 +70,33 @@ void listAdjDFS(vector<vector<int> > &listAdj, int v) {
 	cout << endl;
 }
 
+void listAdjBFS(vector<vector<int> > &listAdj, int v) {
+
+	queue<int> q;
+	int data;
+	vector<bool> status(v, false);
+
+	q.push(0);
+
+	while (!q.empty()) {
+
+		data = q.front();
+		q.pop();
+
+		if (status[data])
+			continue;
+
+		cout << data+1 << " ";
+		status[data] = true;
+
+	//  for (int i=listAdj[data].size()-1; i>=0; i--)
+		for (int i=0; i<listAdj[data].size(); i++)	
+			if (!status[listAdj[data][i]])
+				q.push(listAdj[data][i]);	 
+	}
+	cout << endl;
+}
+
 int main() {
 
 	int v = 7; 		//edges
@@ -89,6 +110,7 @@ int main() {
 	readListAdj(listAdj, e);
 	printListAdj(listAdj);
 	listAdjDFS(listAdj, v);
+	listAdjBFS(listAdj, v);
 
 	return 0;
 }
