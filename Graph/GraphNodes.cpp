@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <stack>
+#include <queue>
 
 using namespace std;
 
@@ -17,21 +19,22 @@ struct GraphNode {
 		check(false), adj(0, NULL) {}
 };
 
-void add(vector<GraphNode*> &nodes, int val, int newVal, int newDist) {
-
-	cout << "Fer" << endl;
+void add(vector<GraphNode*> &nodes, int val, int newVal, int dist) {
 
 	GraphNode *curr, *next;
+	bool found = false;
 
 	for (int i=0; i<nodes.size(); i++) 
-		if (nodes[i]->val = val)
+		if (nodes[i]->val == val) 
 			curr = nodes[i];
 
+	// for ()	
+
 	curr->adj.push_back(new GraphNode(newVal));
-	curr->dist.push_back(newDist);
+	curr->dist.push_back(dist);
 	next = curr->adj[curr->adj.size()-1];
 	next->adj.push_back(curr);
-	next->dist.push_back(newDist);
+	next->dist.push_back(dist);
 	nodes.push_back(next);
 }
 
@@ -42,7 +45,7 @@ void print(vector<GraphNode*> nodes) {
 		cout << nodes[i]->val << endl;
 		for (int j=0; j<nodes[i]->adj.size(); j++) {
 			cout << nodes[i]->adj[j]->val;
-			cout << " " << nodes[i]->dist[j];
+			cout << " " << nodes[i]->dist[j] << endl;
 		} cout << endl << endl;
 	}
 }
@@ -57,9 +60,9 @@ int main() {
 	add(nodes, 1, 2, 2);
 	add(nodes, 1, 4, 10);
 	add(nodes, 2, 3, 5);
-	add(nodes, 2, 4, 10);
+	add(nodes, 2, 4, 4);
 
-	// print(nodes);
+	print(nodes);
 
 	return 0;
 }
