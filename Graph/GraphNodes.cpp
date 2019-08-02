@@ -21,21 +21,32 @@ struct GraphNode {
 
 void add(vector<GraphNode*> &nodes, int val, int newVal, int dist) {
 
-	GraphNode *curr, *next;
-	bool found = false;
+	GraphNode *curr, *next = NULL;
+	// bool found = false;
 
 	for (int i=0; i<nodes.size(); i++) 
 		if (nodes[i]->val == val) 
 			curr = nodes[i];
 
-	// for ()	
+	for (int i=0; i<nodes.size(); i++) 
+		if(nodes[i]->val == newVal) 
+			next = nodes[i];
 
-	curr->adj.push_back(new GraphNode(newVal));
-	curr->dist.push_back(dist);
-	next = curr->adj[curr->adj.size()-1];
-	next->adj.push_back(curr);
-	next->dist.push_back(dist);
-	nodes.push_back(next);
+	if (next == NULL) {
+		curr->adj.push_back(new GraphNode(newVal));
+		curr->dist.push_back(dist);
+		next = curr->adj[curr->adj.size()-1];
+		next->adj.push_back(curr);
+		next->dist.push_back(dist);
+		nodes.push_back(next);
+	} 
+
+	else {
+		curr->adj.push_back(next);
+		curr->dist.push_back(dist);
+		next->adj.push_back(curr);
+		next->dist.push_back(dist);
+	}
 }
 
 void print(vector<GraphNode*> nodes) {
@@ -46,7 +57,7 @@ void print(vector<GraphNode*> nodes) {
 		for (int j=0; j<nodes[i]->adj.size(); j++) {
 			cout << nodes[i]->adj[j]->val;
 			cout << " " << nodes[i]->dist[j] << endl;
-		} cout << endl << endl;
+		} cout << endl;
 	}
 }
 
