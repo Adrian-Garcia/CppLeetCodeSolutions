@@ -5,27 +5,18 @@ using namespace std;
 
 int main() {
 
-	int Mat[3][3];
+	vector<int> v(1,0);
 
-	for (int i=0; i<3; i++)
-		for (int j=0; j<3; j++)
-			cin >> Mat[i][j];
+	v[0] = 1;
+	v[1] = 2;
+	v[2] = 3;
+	v[3] = 4;
+	v[4] = 5;
+	v[5] = 6;
 
-	cout << endl << endl;
-	
-	for (int i=0; i<3; i++) {
-		
-		for (int j=0; j<3; j++) {
-			cout << Mat[i][j] << " ";			
-		}
-
-		cout << endl;
+	for (int i=0; i<v.size(); i++) {
+		cout << v[i] << " ";
 	}
-
-	cout << endl << endl;
-
-	cout << Mat[1][0] << " ";
-	cout << Mat[0][1];
 
 	return 0;
 }
