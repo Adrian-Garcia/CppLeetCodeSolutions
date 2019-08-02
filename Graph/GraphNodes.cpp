@@ -11,15 +11,12 @@ struct GraphNode {
 	int val;		// Name of the GraphNode
 	bool check;		// If it is checked
 
-	//Vectors that have the next nodes values
-	vector<GraphNode*> adj;
-	vector<int> dist;
+	//Vector that have the edge values and its distance
+	vector<pair<GraphNode*, int> > adj;
 
-	//Initiator
 	GraphNode(int x) : val(x),
-		check(false), adj(0, NULL) {}
+		check(false) {}
 
-	//Operators
 	bool operator < (const GraphNode *&other) const {
 		return (this->val < other->val);
 	}
@@ -38,19 +35,6 @@ struct GraphNode {
 
 	bool operator == (const GraphNode *&other) const {
 		return (this->val == other->val);
-	}
-
-	void operator = (GraphNode *&other) {
-		
-		this->val = other->val;	
-		this->check = other->check;
-		this->adj.clear();
-		this->dist.clear();
-
-		for (int i=0; i<other->adj.size(); i++){
-			this->adj.push_back(other->adj[i]);
-			this->dist.push_back(other->dist[i]);
-		}
 	}
 };
 
@@ -71,20 +55,20 @@ void add(vector<GraphNode*> &nodes, int val, int newVal, int dist) {
 
 	if (next == NULL) {
 
-		curr->adj.push_back(new GraphNode(newVal));
-		curr->dist.push_back(dist);
-		next = curr->adj[curr->adj.size()-1];
-		next->adj.push_back(curr);
-		next->dist.push_back(dist);
+		pair<GraphNode*, int> p(new GraphNode(newVal), dist);
+		curr->adj.push_back(p);
+		next = curr->adj[curr->adj.size()-1].first;
+		pair<GraphNode*, int> q(curr, dist);
+		next->adj.push_back(q);
 		nodes.push_back(next);
 	} 
 
 	else {
 
-		curr->adj.push_back(next);
-		curr->dist.push_back(dist);
-		next->adj.push_back(curr);
-		next->dist.push_back(dist);
+		pair<GraphNode*, int> p(next, dist);
+		curr->adj.push_back(p);
+		pair<GraphNode*, int> q(next, dist);
+		next->adj.push_back(q);		
 	}
 }
 
@@ -94,8 +78,8 @@ void print(vector<GraphNode*> nodes) {
 
 		cout << nodes[i]->val << endl;
 		for (int j=0; j<nodes[i]->adj.size(); j++) {
-			cout << nodes[i]->adj[j]->val;
-			cout << " " << nodes[i]->dist[j] << endl;
+			cout << nodes[i]->adj[j].first->val;
+			cout << " " << nodes[i]->adj[j].second << endl;
 		} cout << endl;
 	}
 }
@@ -175,10 +159,10 @@ int main() {
 	add(nodes, 1, 4, 10);
 	add(nodes, 2, 4, 4);
 
-	for (int i=0; i<nodes.size(); i++)
-		cout << nodes[i]->val << endl;
+	// for (int i=0; i<nodes.size(); i++)
+	// 	cout << nodes[i]->val << endl;
 
-	// print(nodes);
+	print(nodes);
 
 	return 0;
 }
