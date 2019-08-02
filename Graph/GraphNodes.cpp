@@ -101,53 +101,50 @@ void print(vector<GraphNode*> nodes) {
 }
 
 void merge(vector<GraphNode*> &nodes, int l, int m, int r) { 
-    
-    int i, j, k; 
-    int n1 = m - l + 1; 
-    int n2 =  r - m; 
-  
-    // int L[n1], R[n2]; 
-    vector<GraphNode*> L(n1); 
-    vector<GraphNode*> R(n2); 
 
+	int i, j, k; 
+	int n1 = m - l + 1; 
+	int n2 =  r - m; 
 
-    for (i = 0; i < n1; i++)
+	vector<GraphNode*> L(n1); 
+	vector<GraphNode*> R(n2); 
+
+	for (i = 0; i < n1; i++)
 		L[i] = nodes[l + i]; 
 
-    for (j = 0; j < n2; j++)
+	for (j = 0; j < n2; j++)
 		R[j] = nodes[m + 1+ j]; 
 
-    i = 0;
-    j = 0;
-    k = l;
+	i = 0;
+	j = 0;
+	k = l;
     
-    while (i < n1 && j < n2) { 
+	while (i < n1 && j < n2) { 
         
-        if (L[i] <= R[j]) { 
-            nodes[k] = L[i]; 
-            i++; 
-        } 
+		if (L[i] <= R[j]) { 
+			nodes[k] = L[i]; 
+			i++; 
+		} 
 
-        else { 
-            nodes[k] = R[j]; 
-            j++; 
-        } 
+		else { 
+			nodes[k] = R[j]; 
+			j++; 
+		} 
 
-        k++; 
-    } 
-  
-    while (i < n1) { 
-        nodes[k] = L[i]; 
-        i++; 
-        k++; 
-    } 
-  
-    //Copy the remaining elements of R[], if there are any
-    while (j < n2) { 
-        nodes[k] = R[j]; 
-        j++; 
-        k++; 
-    } 
+		k++; 
+	} 
+
+	while (i < n1) { 
+		nodes[k] = L[i]; 
+		i++; 
+		k++; 
+	}
+
+	while (j < n2) { 
+		nodes[k] = R[j]; 
+		j++; 
+		k++; 
+	} 
 } 
 
 void mergeSort(vector<GraphNode*> &nodes, int l, int r) { 
@@ -174,12 +171,9 @@ int main() {
 	nodes.push_back(new GraphNode(1));
 
 	add(nodes, 1, 2, 2);
-	add(nodes, 1, 4, 10);
 	add(nodes, 2, 3, 5);
+	add(nodes, 1, 4, 10);
 	add(nodes, 2, 4, 4);
-
-	sort(nodes.begin(), nodes.end());
-	mergeSort(nodes, 0, nodes.size()-1);
 
 	for (int i=0; i<nodes.size(); i++)
 		cout << nodes[i]->val << endl;
