@@ -38,43 +38,36 @@ struct GraphNode {
 	}
 };
 
-// GraphNode* binarySearch(vector<GraphNode*> &nodes, int val) {
+GraphNode* binarySearch(vector<GraphNode*> &nodes, int val) {
 
-// 	int low = 0;
-// 	int mid;
-// 	int big = nodes.size()-1;
+	int low = 0;
+	int mid;
+	int big = nodes.size()-1;
 
-// 	while (low < big) {
+	while (low <= big) {
 
-// 		mid = (low+big)/2;
+		mid = (low+big)/2;
 
-// 		if (nodes[mid]->val == val)
-// 			return nodes[0];
+		if (nodes[mid]->val == val)
+			return nodes[mid];
 
-// 		else if (nodes[mid]->val > val)
-// 			big = mid-1;
+		else if (nodes[mid]->val > val)
+			big = mid-1;
 
-// 		else 
-// 			low = mid+1;			
-// 	}
+		else 
+			low = mid+1;		
+	}
 
-// 	return NULL;
-// }
+	return NULL;
+}
 
 void add(vector<GraphNode*> &nodes, int val, int newVal, int dist) {
 
-	GraphNode *curr = NULL; 
-	GraphNode *next = NULL;
+	GraphNode *curr = binarySearch(nodes, val); 
+	GraphNode *next = binarySearch(nodes, newVal);
 
-	for (int i=0; i<nodes.size(); i++) 
-		if (nodes[i]->val == val) 
-			curr = nodes[i];
-
-	if (curr == NULL) return;
-
-	for (int i=0; i<nodes.size(); i++) 
-		if(nodes[i]->val == newVal) 
-			next = nodes[i];
+	if (curr == NULL) 
+		return;
 
 	if (next == NULL) {
 
@@ -185,7 +178,7 @@ int main() {
 	// for (int i=0; i<nodes.size(); i++)
 	// 	cout << nodes[i]->val << endl;
 
-	// print(nodes);
+	print(nodes);
 
 	return 0;
 }
