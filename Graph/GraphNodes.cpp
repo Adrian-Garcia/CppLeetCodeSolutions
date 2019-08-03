@@ -74,19 +74,19 @@ void add(vector<GraphNode*> &nodes, int val, int newVal, int dist) {
 	if (next == NULL) {
 
 		pair<GraphNode*, int> p(new GraphNode(newVal), dist);
-		curr->adj.push_back(p);
-		next = curr->adj[curr->adj.size()-1].first;
+		curr->adj.insert(curr->adj.begin()+posCurr+1, p);
+		next = curr->adj[posCurr+1].first;
 		pair<GraphNode*, int> q(curr, dist);
-		next->adj.push_back(q);
+		next->adj.insert(next->adj.begin()+posNext+1, q);
 		nodes.push_back(next);
 	} 
 
 	else {
 
 		pair<GraphNode*, int> p(next, dist);
-		curr->adj.push_back(p);
+		curr->adj.insert(curr->adj.begin()+posCurr+1, p);
 		pair<GraphNode*, int> q(next, dist);
-		next->adj.push_back(q);		
+		next->adj.insert(next->adj.begin()+posNext+1, q);		
 	}
 }
 

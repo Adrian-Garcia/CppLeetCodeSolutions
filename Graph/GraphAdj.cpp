@@ -94,7 +94,7 @@ void listAdjBFS(vector<vector<int> > &listAdj, int v) {
 
 int main() {
 
-	int v; 		//edges
+	int v;		//edges
 	int e;		//arches
 
 	cout << "Insert Edges and Arches" << endl;
