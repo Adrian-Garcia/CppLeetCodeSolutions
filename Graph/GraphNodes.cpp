@@ -38,6 +38,29 @@ struct GraphNode {
 	}
 };
 
+// GraphNode* binarySearch(vector<GraphNode*> &nodes, int val) {
+
+// 	int low = 0;
+// 	int mid;
+// 	int big = nodes.size()-1;
+
+// 	while (low < big) {
+
+// 		mid = (low+big)/2;
+
+// 		if (nodes[mid]->val == val)
+// 			return nodes[0];
+
+// 		else if (nodes[mid]->val > val)
+// 			big = mid-1;
+
+// 		else 
+// 			low = mid+1;			
+// 	}
+
+// 	return NULL;
+// }
+
 void add(vector<GraphNode*> &nodes, int val, int newVal, int dist) {
 
 	GraphNode *curr = NULL; 
@@ -162,7 +185,7 @@ int main() {
 	// for (int i=0; i<nodes.size(); i++)
 	// 	cout << nodes[i]->val << endl;
 
-	print(nodes);
+	// print(nodes);
 
 	return 0;
 }
