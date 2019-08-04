@@ -59,8 +59,25 @@ int insert(GraphNode *&node, pair<GraphNode*, int> newNode) {
 			low = mid+1;
 	}
 
+	cout << mid << endl;
 	node->adj.insert(node->adj.begin()+mid+1, newNode);
 	return mid+1;
+}
+
+int insertLinear(GraphNode *&node, pair<GraphNode*, int> newNode) {
+
+	int i=0; 
+
+	while (i<node->adj.size()) {
+
+		if (node->adj[i].first->val > newNode.first->val)
+			break;
+
+		i++;
+	}
+
+	node->adj.insert(node->adj.begin()+i, newNode);
+	return i;
 }
 
 void add(vector<GraphNode*> &nodes, int val, int newVal, int dist) {
@@ -71,9 +88,10 @@ void add(vector<GraphNode*> &nodes, int val, int newVal, int dist) {
 	GraphNode *curr = binarySearch(nodes, val, posCurr); 
 	GraphNode *next = binarySearch(nodes, newVal, posNext);
 
-	// First and second node does not exist
+	// Both nodes does not exist
 	if (curr == NULL && next == NULL) {
 		
+		// Create both nodes
 		curr = new GraphNode(val);
 		pair<GraphNode*, int> p(new GraphNode(newVal), dist);
 		curr->adj.push_back(p);
@@ -92,13 +110,18 @@ void add(vector<GraphNode*> &nodes, int val, int newVal, int dist) {
 	else if (next == NULL) {
 		
 		int pos;
-		
+
 		pair<GraphNode*, int> p(new GraphNode(newVal), dist);
-		pos = insert(curr, p);
+		
+		pos = insertLinear(curr, p);
+		
 		next = curr->adj[pos].first;
+		
 		pair<GraphNode*, int> q(curr, dist);
+		
 		next->adj.push_back(q);
-		nodes.insert(nodes.begin()+posCurr+1, next);
+		
+		nodes.insert(nodes.begin()+posCurr+2, next);
 	} 
 
 	// Both node exist
@@ -151,11 +174,17 @@ int main() {
 	vector<GraphNode*> nodes;
 
 	add(nodes, 1, 2, 2);
-	add(nodes, 1, 4, 10);
-	add(nodes, 1, 3, 5);
-
-	printAllNodes(nodes);
 	printNode(nodes[0]);
+	cout << endl;
+	add(nodes, 1, 4, 10);
+	printNode(nodes[0]);
+	cout << endl;
+	add(nodes, 1, 3, 5);
+	printNode(nodes[0]);
+	cout << endl;
+	cout << endl << endl;
+	printAllNodes(nodes);
+	
 	// printNode(nodes[1]);
 	// printNode(nodes[2]);
 
