@@ -43,7 +43,7 @@ int insert(GraphNode *&node, pair<GraphNode*, int> newNode) {
 
 	int low = 0;
 	int mid;
-	int big = node->adj.size();
+	int big = node->adj.size()-1;
 
 	while (low <= big) {
 		
@@ -53,10 +53,10 @@ int insert(GraphNode *&node, pair<GraphNode*, int> newNode) {
 			return mid+1;
 
 		else if (node->adj[mid].first->val > newNode.first->val)
-			mid = big-1;
+			big = mid-1;
 
 		else 
-			mid = low+1;
+			low = mid+1;
 	}
 
 	node->adj.insert(node->adj.begin()+mid+1, newNode);
@@ -91,15 +91,10 @@ void add(vector<GraphNode*> &nodes, int val, int newVal, int dist) {
 	// Second node does not exist
 	else if (next == NULL) {
 		
-		cout << 1 << endl;
-
 		int pos;
 		
 		pair<GraphNode*, int> p(new GraphNode(newVal), dist);
-		
-		cout << 2 << endl;
 		pos = insert(curr, p);
-		
 		next = curr->adj[pos].first;
 		pair<GraphNode*, int> q(curr, dist);
 		next->adj.push_back(q);
@@ -157,11 +152,12 @@ int main() {
 
 	add(nodes, 1, 2, 2);
 	add(nodes, 1, 4, 10);
-	// add(nodes, 2, 4, 4);
+	add(nodes, 1, 3, 5);
 
 	printAllNodes(nodes);
 	printNode(nodes[0]);
-	printNode(nodes[1]);
+	// printNode(nodes[1]);
+	// printNode(nodes[2]);
 
 	return 0;
 }
