@@ -17,6 +17,21 @@ struct GraphNode {
 	GraphNode(int x) : val(x), check(false) {}
 };
 
+GraphNode* linearSearch(vector<GraphNode*> &nodes, int val, int &i) {
+
+	i=0;
+
+	while (i<nodes.size()) {
+
+		if (nodes[i]->val == val)
+			return nodes[i];
+		
+		i++;
+	}
+
+	return NULL;
+}
+
 GraphNode* binarySearch(vector<GraphNode*> &nodes, int val, int &mid) {
 
 	int low = 0;
@@ -82,11 +97,11 @@ int insertLinear(GraphNode *&node, pair<GraphNode*, int> newNode) {
 
 void add(vector<GraphNode*> &nodes, int val, int newVal, int dist) {
 
-	int posCurr;
-	int posNext;
+	int posCurr = 0;
+	int posNext = 0;
 
-	GraphNode *curr = binarySearch(nodes, val, posCurr); 
-	GraphNode *next = binarySearch(nodes, newVal, posNext);
+	GraphNode *curr = linearSearch(nodes, val, posCurr); 
+	GraphNode *next = linearSearch(nodes, newVal, posNext);
 
 	// Both nodes does not exist
 	if (curr == NULL && next == NULL) {
@@ -120,8 +135,7 @@ void add(vector<GraphNode*> &nodes, int val, int newVal, int dist) {
 		pair<GraphNode*, int> q(curr, dist);
 		
 		next->adj.push_back(q);
-		
-		nodes.insert(nodes.begin()+posCurr+2, next);
+		nodes.insert(nodes.begin()+posCurr+1, next);
 	} 
 
 	// Both node exist
@@ -174,15 +188,12 @@ int main() {
 	vector<GraphNode*> nodes;
 
 	add(nodes, 1, 2, 2);
-	printNode(nodes[0]);
-	cout << endl;
 	add(nodes, 1, 4, 10);
-	printNode(nodes[0]);
-	cout << endl;
 	add(nodes, 1, 3, 5);
-	printNode(nodes[0]);
-	cout << endl;
-	cout << endl << endl;
+	add(nodes, 1, 7, 6);
+	add(nodes, 1, 10, 12);
+	add(nodes, 1, 6, 1);
+	add(nodes, 1, 8, 20);
 	printAllNodes(nodes);
 	
 	// printNode(nodes[1]);
