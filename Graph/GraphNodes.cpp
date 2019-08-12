@@ -6,6 +6,7 @@
 
 using namespace std;
 
+// Node
 struct GraphNode {
 
 	int val;		// Name of the GraphNode
