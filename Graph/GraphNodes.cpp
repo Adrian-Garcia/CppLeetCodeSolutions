@@ -6,6 +6,7 @@
 
 using namespace std;
 
+// Node
 struct GraphNode {
 
 	int val;		// Name of the GraphNode
@@ -14,29 +15,23 @@ struct GraphNode {
 	//Vector that have the edge values and its distance
 	vector<pair<GraphNode*, int> > adj;
 
-	GraphNode(int x) : val(x),
-		check(false) {}
-
-	bool operator < (const GraphNode *&other) const {
-		return (this->val < other->val);
-	}
-
-	bool operator > (const GraphNode *&other) const {
-		return (this->val > other->val);
-	}
-
-	bool operator <= (const GraphNode *&other) const {
-		return (this->val <= other->val);
-	}
-
-	bool operator >= (const GraphNode *&other) const {
-		return (this->val >= other->val);
-	}
-
-	bool operator == (const GraphNode *&other) const {
-		return (this->val == other->val);
-	}
+	GraphNode(int x) : val(x), check(false) {}
 };
+
+GraphNode* linearSearch(vector<GraphNode*> &nodes, int val, int &i) {
+
+	i=0;
+
+	while (i<nodes.size()) {
+
+		if (nodes[i]->val == val)
+			return nodes[i];
+		
+		i++;
+	}
+
+	return NULL;
+}
 
 GraphNode* binarySearch(vector<GraphNode*> &nodes, int val, int &mid) {
 
@@ -60,31 +55,96 @@ GraphNode* binarySearch(vector<GraphNode*> &nodes, int val, int &mid) {
 	return NULL;
 }
 
+int insert(GraphNode *&node, pair<GraphNode*, int> newNode) {
+
+	int low = 0;
+	int mid;
+	int big = node->adj.size()-1;
+
+	while (low <= big) {
+		
+		mid = (low+big)/2;
+
+		if (node->adj[mid].first->val == newNode.first->val)
+			return mid+1;
+
+		else if (node->adj[mid].first->val > newNode.first->val)
+			big = mid-1;
+
+		else 
+			low = mid+1;
+	}
+
+	cout << mid << endl;
+	node->adj.insert(node->adj.begin()+mid+1, newNode);
+	return mid+1;
+}
+
+int insertLinear(GraphNode *&node, pair<GraphNode*, int> newNode) {
+
+	int i=0; 
+
+	while (i<node->adj.size()) {
+
+		if (node->adj[i].first->val > newNode.first->val)
+			break;
+
+		i++;
+	}
+
+	node->adj.insert(node->adj.begin()+i, newNode);
+	return i;
+}
+
 void add(vector<GraphNode*> &nodes, int val, int newVal, int dist) {
 
-	int posCurr;
-	int posNext;
+	int posCurr = 0;
+	int posNext = 0;
 
-	GraphNode *curr = binarySearch(nodes, val, posCurr); 
-	GraphNode *next = binarySearch(nodes, newVal, posNext);
+	GraphNode *curr = linearSearch(nodes, val, posCurr); 
+	GraphNode *next = linearSearch(nodes, newVal, posNext);
 
-	if (curr == NULL) 
+	// Both nodes does not exist
+	if (curr == NULL && next == NULL) {
+		
+		// Create both nodes
+		curr = new GraphNode(val);
+		pair<GraphNode*, int> p(new GraphNode(newVal), dist);
+		curr->adj.push_back(p);
+		
+		next = curr->adj[0].first;
+		pair<GraphNode*, int> q(curr, dist);
+		next->adj.push_back(q);
+		
+		nodes.push_back(curr);
+		nodes.push_back(next);
+		
 		return;
+	}
 
-	if (next == NULL) {
+	// Second node does not exist
+	else if (next == NULL) {
+		
+		int pos;
 
 		pair<GraphNode*, int> p(new GraphNode(newVal), dist);
-		curr->adj.insert(curr->adj.begin()+posCurr+1, p);
-		next = curr->adj[posCurr+1].first;
+		
+		pos = insertLinear(curr, p);
+		
+		next = curr->adj[pos].first;
+		
 		pair<GraphNode*, int> q(curr, dist);
-		next->adj.insert(next->adj.begin()+posNext+1, q);
-		nodes.push_back(next);
+		
+		next->adj.push_back(q);
+		nodes.insert(nodes.begin()+posCurr+1, next);
 	} 
 
+	// Both node exist
 	else {
 
 		pair<GraphNode*, int> p(next, dist);
 		curr->adj.insert(curr->adj.begin()+posCurr+1, p);
+		
 		pair<GraphNode*, int> q(next, dist);
 		next->adj.insert(next->adj.begin()+posNext+1, q);		
 	}
@@ -102,63 +162,22 @@ void print(vector<GraphNode*> nodes) {
 	}
 }
 
-void merge(vector<GraphNode*> &nodes, int l, int m, int r) { 
+void printNode(GraphNode* node) {
 
-	int i, j, k; 
-	int n1 = m - l + 1; 
-	int n2 =  r - m; 
-
-	vector<GraphNode*> L(n1); 
-	vector<GraphNode*> R(n2); 
-
-	for (i = 0; i < n1; i++)
-		L[i] = nodes[l + i]; 
-
-	for (j = 0; j < n2; j++)
-		R[j] = nodes[m + 1+ j]; 
-
-	i = 0;
-	j = 0;
-	k = l;
-    
-	while (i < n1 && j < n2) { 
-        
-		if (L[i] <= R[j]) { 
-			nodes[k] = L[i]; 
-			i++; 
-		} 
-
-		else { 
-			nodes[k] = R[j]; 
-			j++; 
-		} 
-
-		k++; 
+	for (int i=0; i<node->adj.size(); i++) {
+		cout << node->val << " -> ";
+		cout << node->adj[i].first->val << " - ";
+		cout << node->adj[i].second << endl;
 	} 
+}
 
-	while (i < n1) { 
-		nodes[k] = L[i]; 
-		i++; 
-		k++; 
-	}
+void printAllNodes(vector<GraphNode*> nodes) {
 
-	while (j < n2) { 
-		nodes[k] = R[j]; 
-		j++; 
-		k++; 
-	} 
-} 
+	for(int i=0; i<nodes.size(); i++)
+		cout << nodes[i]->val << " ";
 
-void mergeSort(vector<GraphNode*> &nodes, int l, int r) { 
-    
-    if (l < r) { 
-    
-        int m = l+(r-l)/2;
-        mergeSort(nodes, l, m); 
-        mergeSort(nodes, m+1, r); 
-        merge(nodes, l, m, r); 
-    } 
-} 
+	cout << endl;
+}
 
 void DFS(vector<GraphNode*> nodes) {
 
@@ -168,19 +187,18 @@ void DFS(vector<GraphNode*> nodes) {
 int main() {
 
 	vector<GraphNode*> nodes;
-	GraphNode *curr, *next;
-
-	nodes.push_back(new GraphNode(1));
 
 	add(nodes, 1, 2, 2);
-	add(nodes, 2, 3, 5);
 	add(nodes, 1, 4, 10);
-	add(nodes, 2, 4, 4);
-
-	// for (int i=0; i<nodes.size(); i++)
-	// 	cout << nodes[i]->val << endl;
-
-	print(nodes);
+	add(nodes, 1, 3, 5);
+	add(nodes, 1, 7, 6);
+	add(nodes, 1, 10, 12);
+	add(nodes, 1, 6, 1);
+	add(nodes, 1, 8, 20);
+	printAllNodes(nodes);
+	
+	// printNode(nodes[1]);
+	// printNode(nodes[2]);
 
 	return 0;
 }
