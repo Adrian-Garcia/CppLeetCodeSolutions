@@ -31,8 +31,8 @@ bool isSubsetSum(int set[], int n, int sum) {
 
 int main() {
 
-	int set[] = {3, 34, 4, 12, 5, 2};
-	int sum = 9;
+	int set[] = {1,2,3};
+	int sum = 6;
 	int n = sizeof(set)/sizeof(int);
 
 	isSubsetSum(set, n, sum) ?
