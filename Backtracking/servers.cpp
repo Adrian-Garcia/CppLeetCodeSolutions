@@ -3,15 +3,49 @@
 
 using namespace std;
 
-bool 
+void backtracking(vector<int> processes, int n, int middle, int &close, bool &flag) {
 
-void splitServer(vector<int> processes) {
+	if (flag)
+		return;
+
+	if (middle == 0) {
+		flag = true;
+		return;
+	}
+
+	if (middle < close)
+		close = middle;
+
+	if (n == 0 && middle != 0)
+		return;
+
+	if (processes[n-1] > middle)
+		backtracking(processes, n-1, middle, close, flag);
+
+	backtracking(processes, n-1, middle, close, flag);
+	backtracking(processes, n-1, middle-processes[n-1], close, flag);
+}
+
+int sumValues(vector<int> processes) {
+
+	int addition = 0;
+
+	for (int i=0; i<processes.size(); i++)
+		addition+=processes[i];
+
+	return addition;
+}
+
+int splitServer(vector<int> processes) {
 
 	int n = processes.size();
-	int middle = n/2;	
-	int close = n;
+	int sum = sumValues(processes);
+	int middle = sum/2;	
+	int close = sum;
+	bool flag = false;
 
-	backtracking(int processes, n, middle, close)
+	backtracking(processes, n, middle, close, flag);
+	return close;
 }
 
 int main() {
@@ -23,6 +57,8 @@ int main() {
 	processes.push_back(3);
 	processes.push_back(4);
 	processes.push_back(5);
+
+	cout << splitServer(processes) << endl;
 
 	return 0;
 }

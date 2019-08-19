@@ -51,7 +51,7 @@ void backtracking(int set[], int n, int sum) {
 int main() {
 
 	int set[] = {1,2,3};
-	int sum = 6;
+	int sum = 3;
 	int n = sizeof(set)/sizeof(int);
 
 	backtracking(set, n, sum);
