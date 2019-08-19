@@ -8,6 +8,8 @@ void backtracking(vector<int> processes, int n, int middle, int &close, bool &fl
 	if (flag)
 		return;
 
+	cout << close << " ";
+
 	if (middle == 0) {
 		flag = true;
 		return;
@@ -15,6 +17,8 @@ void backtracking(vector<int> processes, int n, int middle, int &close, bool &fl
 
 	if (middle < close)
 		close = middle;
+
+	cout << close << endl;
 
 	if (n == 0 && middle != 0)
 		return;
@@ -58,7 +62,10 @@ int main() {
 	processes.push_back(4);
 	processes.push_back(5);
 
-	cout << splitServer(processes) << endl;
+	for (int i=0; i<processes.size(); i++)
+		cout << processes[i] << " ";
+
+	cout << endl << endl << endl << splitServer(processes) << endl;
 
 	return 0;
 }

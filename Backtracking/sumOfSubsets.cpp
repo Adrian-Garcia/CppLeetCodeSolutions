@@ -31,13 +31,13 @@ bool isSubsetSum(int set[], int n, int sum) {
 
 void backtracking(int set[], int n, int sum) {
 
+	cout << sum << endl;
+
 	if (sum == 0) {
-		cout << "SI" << endl;
 		return;
 	}
 
 	if (n == 0 && sum != 0) {
-		cout << "NO" << endl;
 		return;
 	}
 
@@ -50,15 +50,15 @@ void backtracking(int set[], int n, int sum) {
 
 int main() {
 
-	int set[] = {1,2,3};
-	int sum = 3;
+	int set[] = {1};
+	int sum = 4;
 	int n = sizeof(set)/sizeof(int);
 
-	backtracking(set, n, sum);
+	// backtracking(set, n, sum);
 
-	// isSubsetSum(set, n, sum) ?
-	// 	cout << "SI" << endl:
-	// 	cout << "NO" << endl;
+	isSubsetSum(set, n, sum) ?
+		cout << "SI" << endl:
+		cout << "NO" << endl;
 
 
 	return 0;
