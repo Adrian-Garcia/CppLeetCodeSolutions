@@ -3,31 +3,24 @@
 
 using namespace std;
 
-void backtracking(vector<int> processes, int n, int middle, int &close, bool &flag) {
-
-	if (flag)
-		return;
-
-	cout << close << " ";
-
-	if (middle == 0) {
-		flag = true;
-		return;
-	}
+bool backtracking(vector<int> processes, int n, int middle, int &close) {
 
 	if (middle < close)
 		close = middle;
-
-	cout << close << endl;
+			
+	if (middle == 0) {
+		return true;
+	}
 
 	if (n == 0 && middle != 0)
-		return;
+		return false;
 
 	if (processes[n-1] > middle)
-		backtracking(processes, n-1, middle, close, flag);
+		return backtracking(processes, n-1, middle, close);
 
-	backtracking(processes, n-1, middle, close, flag);
-	backtracking(processes, n-1, middle-processes[n-1], close, flag);
+	return 
+		backtracking(processes, n-1, middle, close) ||
+		backtracking(processes, n-1, middle-processes[n-1], close);
 }
 
 int sumValues(vector<int> processes) {
@@ -48,8 +41,8 @@ int splitServer(vector<int> processes) {
 	int close = sum;
 	bool flag = false;
 
-	backtracking(processes, n, middle, close, flag);
-	return close;
+	return backtracking(processes, n, middle, close) ?
+		sum-middle*2 : close;	
 }
 
 int main() {
