@@ -41,14 +41,27 @@ void showVectors(vector<vector<int> > nums) {
 	}
 }
 
-void backtracking(vector<int>& nums, vector<vector<int>> &res) {
+void backtracking(vector<int>& nums, vector<int>& sub, vector<vector<int> >& res, int pos) {
 	
+	res.push_back(sub);
+
+	for (int i=pos; i<nums.size(); i++) {
+		sub.push_back(nums[i]);
+		backtracking(nums, sub, res, i+1);
+		sub.pop_back();
+	}
 }
 
-vector<vector<int>> subsets(vector<int>& nums) {
+vector<vector<int> > subsets(vector<int> &nums) {
 
-	int n = nums.size();
+	int pos = 0;
 
+	vector<int> sub;
+	vector<vector<int> > res;
+
+	backtracking(nums, sub, res, pos);
+
+	return res;
 }
 
 int main() {
@@ -59,9 +72,9 @@ int main() {
 	nums.push_back(2);
 	nums.push_back(3);
 
-	vector<vector<int>> response = subsets(nums);
+	vector<vector<int> > response = subsets(nums);
 
-	showVectors(nums);
+	showVectors(response);
 
 	return 0;
 }
