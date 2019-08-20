@@ -41,7 +41,7 @@ void backtracking(int set[], int n, int sum) {
 		return;
 	}
 
-	if (set[n-1] > sum)
+	if (sest[n-1] > sum)
 		backtracking(set, n-1, sum);
 
 	backtracking(set, n-1, sum);
