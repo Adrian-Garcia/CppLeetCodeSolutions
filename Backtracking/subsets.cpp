@@ -32,12 +32,13 @@ void showVectors(vector<vector<int> > nums) {
 
 	for (int i=0; i<nums.size(); i++) {
 
+		cout << "[";
 		for (int j=0; j<nums[i].size(); j++) {
 
 			cout << nums[i][j] << " ";
 		}
 
-		cout << endl;
+		cout << "]" << endl;
 	}
 }
 
