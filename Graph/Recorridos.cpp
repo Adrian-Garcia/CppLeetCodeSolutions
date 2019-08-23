@@ -13,6 +13,16 @@ using namespace std;
 // Read List
 vector<vector<int> > readList(int e, int v) {
 
+	int a, b;
+	vector<vector<int> > list(v);
+
+	for (int i=0; i<e; i++) {
+		cin >> a >> b;
+		list[a-1].push_back(b-1);
+		list[b-1].push_back(a-1);
+	}
+
+	return list;
 }
 
 // Read Matrix
@@ -83,8 +93,8 @@ void matrixDFS(int v, bool matrix[N][N]) {
 		cout << data+1 << " ";
 		status[data] = true;
 
-		for (int i=v; i>=0; i--) 
-			if (matrix[data][i])
+		for (int i=v-1; i>=0; i--) 
+			if (matrix[data][i]) 
 				s.push(i);
 	}
 }
@@ -93,36 +103,29 @@ void matrixDFS(int v, bool matrix[N][N]) {
 void matrixBFS(int v, bool matrix[N][N]) {
 
 	queue<int> q;
-	vector<bool> status(v);
+	vector<bool> status(v, false);
+	int data;
 
 	q.push(0);
 
-	status[0] = true;
-
 	while (!q.empty()) {
 
-		cout << q.front()+1 << " ";
-
-		for (int i=0; i<v; i++) {
-
-			if (!status[i] && matrix[q.front()][i]) {
-				status[i] = true;
-				q.push(i);
-			}
-		}
-
+		data = q.front();
 		q.pop();
+
+		if (status[data])
+			continue;
+
+		cout << data+1 << " ";
+		status[data] = true;
+
+		for (int i=0; i<v; i++) 
+			if (matrix[data][i]) 
+				q.push(i);
 	}
 }
 
-int main() {
-
-	cout << "Grafo" << endl;
-
-	bool matrix[N][N];
-	int v, e;
-
-	cin >> v >> e;
+void mat(int e, int v, bool matrix[N][N]) { 
 
 	readMatrix(e, v, matrix);
 	cout << endl << endl;
@@ -131,6 +134,25 @@ int main() {
 	matrixDFS(v, matrix);
 	cout << endl << "BFS: ";
 	matrixBFS(v, matrix);
+}
+
+void lis(int e, int v, vector<vector<int> > &list) {
+
+	list = readList(e, v);
+}
+
+int main() {
+
+	cout << "Grafo" << endl;
+
+	vector<vector<int> > list;
+	bool matrix[N][N];
+	int v, e;
+
+	cin >> v >> e;
+
+	// mat(e, v, matrix);
+	lis(e, v, list);
 
 	return 0;
 }
