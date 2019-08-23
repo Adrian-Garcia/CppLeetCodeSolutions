@@ -14,6 +14,7 @@ using namespace std;
 vector<vector<int> > readList(int e, int v) {
 
 	int a, b;
+
 	vector<vector<int> > list(v);
 
 	for (int i=0; i<e; i++) {
@@ -43,6 +44,19 @@ void readMatrix(int e, int v, bool matrix[N][N]) {
 	}
 }
 
+void printList(vector<vector<int> > list) {
+
+	for (int i=0; i<list.size(); i++) {
+
+		cout << i+1 << " -> ";
+
+		for (int j=0; j<list[i].size(); j++) 
+			cout << list[i][j]+1 << " ";
+
+		cout << endl;
+	}
+}
+
 void printMatrix(int e, int v, bool matrix[N][N]) {
 
 	cout << "\t";
@@ -66,11 +80,51 @@ void printMatrix(int e, int v, bool matrix[N][N]) {
 // DFS List
 void listDFS(vector<vector<int> > &listAdj, int v) {
 
+	stack<int> s;
+	vector<bool> status(v, false);
+	int data;
+
+	s.push(0);
+
+	while (!s.empty()) {
+
+		data = s.top();
+		s.pop();
+
+		if (status[data])
+			continue;
+
+		cout << data+1 << " ";
+		status[data] = true;
+
+		for (int i=listAdj[data].size()-1; i>=0; i--) 
+			s.push(listAdj[data][i]);
+	}
 }
 
 // BFS List
 void listBFS(vector<vector<int> > &listAdj, int v) {
 
+	queue<int> q;
+	vector<bool> status(v, false);
+	int data;
+
+	q.push(0);
+
+	while (!q.empty()) {
+
+		data = q.front();
+		q.pop();
+
+		if (status[data])
+			continue;
+
+		cout << data+1 << " ";
+		status[data] = true;
+
+		for (int i=0; i<listAdj[data].size(); i++)
+				q.push(listAdj[data][i]);
+	}
 }
 
 // DFS Matrix
@@ -134,11 +188,21 @@ void mat(int e, int v, bool matrix[N][N]) {
 	matrixDFS(v, matrix);
 	cout << endl << "BFS: ";
 	matrixBFS(v, matrix);
+
+	return;
 }
 
-void lis(int e, int v, vector<vector<int> > &list) {
+void lst(int e, int v, vector<vector<int> > &list) {
 
 	list = readList(e, v);
+	cout << endl;
+	printList(list);
+	cout << endl << "DFS: ";
+	listDFS(list, v);
+	cout << endl << "BFS: ";
+	listBFS(list, v);
+
+	return;
 }
 
 int main() {
@@ -151,8 +215,8 @@ int main() {
 
 	cin >> v >> e;
 
-	// mat(e, v, matrix);
-	lis(e, v, list);
+	mat(e, v, matrix);
+	// lst(e, v, list);
 
 	return 0;
 }
