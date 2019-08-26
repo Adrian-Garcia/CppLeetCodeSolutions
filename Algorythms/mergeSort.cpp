@@ -15,7 +15,7 @@ void merge(vector<int> &nums, int l, int m, int r) {
 	for (i=0; i<N1; i++)
 		L[i] = nums[l+i];
 
-	for (j=0; k<N2; j++)
+	for (j=0; j<N2; j++)
 		R[j] = nums[m+j+1];
 
 	i=0;
@@ -54,14 +54,14 @@ void mergeSort(vector<int> &nums, int l, int r) {
 
 	if (l < r) {
 
-		int m = l+(r-l)/2;
+		int m=l+(r-l)/2;
 
 		mergeSort(nums, l, m);
 		mergeSort(nums, m+1, r);
 
 		merge(nums, l, m, r);
 	}
-} 
+}
 
 void print(vector<int> nums) {
 
