@@ -15,26 +15,22 @@ void print(vector<int> v) {
 int binarySearch(vector<int> &v, int val) {
 
 	int low = 0;
-	int mid;
 	int big = v.size()-1;
+	int mid = (big+low)/2;
 
 	while (low <= big) {
 
-		mid = (low+big)/2;
+		mid = (big+low)/2;
 
 		if (v[mid] == val)
 			return mid;
 
-		else if (v[mid] > val)
-			big = mid-1;
-
-		else 
+		else if (v[mid] < val) 
 			low = mid+1;
+
+		else
+			big = mid-1;
 	}
-
-	v.insert(v.begin() + mid+1, val);
-
-	print(v);
 
 	return mid;
 }
@@ -54,8 +50,6 @@ int main() {
 
 	print(v);
 	cout << binarySearch(v, 3) << endl << endl;
-
-	cout << binarySearch(v, 9) << endl;
 
 	return 0;
 }
