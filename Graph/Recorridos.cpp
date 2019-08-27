@@ -91,13 +91,13 @@ void listDFS(vector<vector<int> > &listAdj, int v) {
 		data = s.top();
 		s.pop();
 
-		if (status[data])
+		if (status[data]) 
 			continue;
 
 		cout << data+1 << " ";
 		status[data] = true;
 
-		for (int i=listAdj[data].size()-1; i>=0; i--) 
+		for (int i=listAdj[data].size()-1; i>=0; i--)
 			s.push(listAdj[data][i]);
 	}
 }
@@ -122,16 +122,16 @@ void listBFS(vector<vector<int> > &listAdj, int v) {
 		cout << data+1 << " ";
 		status[data] = true;
 
-		for (int i=0; i<listAdj[data].size(); i++)
-				q.push(listAdj[data][i]);
-	}
+		for (int i=0; i<listAdj[data].size(); i++) 
+			q.push(listAdj[data][i]);
+	}	
 }
 
 // DFS Matrix
 void matrixDFS(int v, bool matrix[N][N]) {
 
 	stack<int> s;
-	vector<bool> status(v, false);
+	vector<int> status(v, false);
 	int data;
 
 	s.push(0);
@@ -148,9 +148,10 @@ void matrixDFS(int v, bool matrix[N][N]) {
 		status[data] = true;
 
 		for (int i=v-1; i>=0; i--) 
-			if (matrix[data][i]) 
+			if (matrix[data][i])
 				s.push(i);
 	}
+
 }
 
 // BFS Matrix 
@@ -173,8 +174,8 @@ void matrixBFS(int v, bool matrix[N][N]) {
 		cout << data+1 << " ";
 		status[data] = true;
 
-		for (int i=0; i<v; i++) 
-			if (matrix[data][i]) 
+		for (int i=0; i<v; i++)
+			if (matrix[data][i])
 				q.push(i);
 	}
 }
@@ -215,8 +216,8 @@ int main() {
 
 	cin >> v >> e;
 
-	mat(e, v, matrix);
-	// lst(e, v, list);
+	// mat(e, v, matrix);
+	lst(e, v, list);
 
 	return 0;
 }
