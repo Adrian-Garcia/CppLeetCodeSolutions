@@ -3,13 +3,13 @@ Not my Dijkstra's Algorithm... Yet...
 
 Got from https://www.youtube.com/watch?v=wQIb1NonMIM
 */
-
 #include <iostream>
 #include <climits>
+#include <vector>
 
 using namespace std;
 
-int findMinVertex(int* distance, bool* visited, int n) {
+int findMinVertex(vector<int> distance, vector<bool> visited, int n) {
 
 	int minVertex = -1;
 
@@ -23,15 +23,10 @@ int findMinVertex(int* distance, bool* visited, int n) {
 	return minVertex;
 }
 
-void dijkstra(int ** edges, int n) {
+void dijkstra(vector<vector<int> > edges, int n) {
 
-	int *distance = new int[n];
-	bool *visited = new bool[n];
-
-	for (int i=0; i<n; i++) {
-		distance[i] = INT_MAX;
-		visited[i] = false;
-	}
+	vector<int> distance(n, INT_MAX);
+	vector<bool> visited(n, false);
 
 	distance[0] = 0;
 
@@ -56,9 +51,6 @@ void dijkstra(int ** edges, int n) {
 
 	for (int i=0; i<n; i++) 
 		cout << i << " " << distance[i] << endl;
-
-	delete [] visited;
-	delete [] distance;
 }
 
 int main() {
@@ -68,11 +60,12 @@ int main() {
 
 	cin >> n >> e;
 
-	int **edges = new int*[n];
+	vector<vector<int> > edges(n);
 
 	for (int i=0; i<n; i++) {
 		
-		edges[i] = new int[n];
+		vector<int> curr(n);
+		edges[i].push_back(curr);
 
 		for (int j=0; j<n; j++) 
 			edges[i][j] = 0;
@@ -88,9 +81,6 @@ int main() {
 
 	cout << endl;
 	dijkstra(edges, n);
-
-	for (int i=0; i<n; i++)
-		delete [] edges[i];
 
 	return 0;
 }
