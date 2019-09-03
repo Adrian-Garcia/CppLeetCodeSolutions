@@ -30,9 +30,6 @@ int main() {
 	nums.push_back(3);
 	nums.push_back(4);
 
-
-	
-
 	cout << singleNumber(nums);
 
 	return 0;
