@@ -60,12 +60,10 @@ int main() {
 
 	cin >> n >> e;
 
-	vector<vector<int> > edges(n);
+	// vector<int> aux(n, 0);
+	vector<vector<int> > edges(n, vector<int> (n));
 
 	for (int i=0; i<n; i++) {
-		
-		vector<int> curr(n);
-		edges[i].push_back(curr);
 
 		for (int j=0; j<n; j++) 
 			edges[i][j] = 0;
