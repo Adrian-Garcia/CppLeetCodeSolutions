@@ -15,7 +15,7 @@ int findMinVertex(int* distance, bool* visited, int n) {
 
 	for (int i=0; i<n; i++) {
 
-		if (!visited[i] && distance[i] < distance[minVertex]) {
+		if (!visited[i] && (minVertex == -1 || distance[i] < distance[minVertex])) {
 			minVertex = i;
 		}
 	}
