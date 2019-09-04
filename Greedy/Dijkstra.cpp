@@ -9,76 +9,78 @@ Got from https://www.youtube.com/watch?v=wQIb1NonMIM
 
 using namespace std;
 
-int findMinVertex(vector<int> distance, vector<bool> visited, int n) {
+int findMinVertex(vector<int> distance, vector<bool> status, int n) {
 
 	int minVertex = -1;
 
-	for (int i=0; i<n; i++) {
-
-		if (!visited[i] && (minVertex == -1 || distance[i] < distance[minVertex])) {
+	for (int i=0; i<n; i++) 
+		if (!status[i] && (minVertex == -1 || distance[i] < distance[minVertex]))
 			minVertex = i;
-		}
-	}
 
 	return minVertex;
 }
 
-void dijkstra(vector<vector<int> > edges, int n) {
+void dijkstra(vector<vector<int> > graph, int n) {
 
 	vector<int> distance(n, INT_MAX);
-	vector<bool> visited(n, false);
+	vector<bool> status(n, false);
+
+	int minVertex;
+	int dist;
 
 	distance[0] = 0;
 
 	for (int i=0; i<n-1; i++) {
 
-		int minVertex = findMinVertex(distance, visited, n);
-
-		visited[minVertex] = true;
+		minVertex = findMinVertex(distance, status, n);
+		status[minVertex] = true;
 
 		for (int j=0; j<n; j++) {
 			
-			if (edges[minVertex][j] != 0 && !visited[j]) {
+			if (graph[minVertex][j] != 0 && !status[j]) {
 				
-				int dist = distance[minVertex] + edges[minVertex][j];
-
-				if (dist < distance[j]) {
+				dist = distance[minVertex] + graph[minVertex][j];
+				
+				if (dist < distance[j]) 
 					distance[j] = dist;
-				} 
 			}
 		} 
 	}
 
+
+	cout << endl;
 	for (int i=0; i<n; i++) 
 		cout << i << " " << distance[i] << endl;
 }
 
 int main() {
 
-	int n;
+	int n;			
 	int e;
+
+	int f;
+	int s;
+	int weight;
 
 	cin >> n >> e;
 
-	// vector<int> aux(n, 0);
-	vector<vector<int> > edges(n, vector<int> (n));
-
-	for (int i=0; i<n; i++) {
-
-		for (int j=0; j<n; j++) 
-			edges[i][j] = 0;
-	}
+	vector<vector<int> > graph(n, vector<int> (n));
 
 	for (int i=0; i<e; i++) {
-		int f, s, weight;
 
 		cin >> f >> s >> weight;
-		edges[f][s] = weight;
-		edges[s][f] = weight;
+		graph[f][s] = weight;
+		graph[s][f] = weight;
 	}
 
 	cout << endl;
-	dijkstra(edges, n);
+	for (int i=0; i<n; i++) {
+		for (int j=0; j<n; j++) 
+			cout << graph[i][j] << "\t";
+		cout << endl;
+	}
+
+	dijkstra(graph, n);
 
 	return 0;
 }
