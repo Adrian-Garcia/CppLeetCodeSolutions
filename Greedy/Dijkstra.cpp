@@ -15,7 +15,7 @@ int findMinVertex(vector<int> distance, vector<bool> status, int n) {
 	int minVertex = -1;
 
 	for (int i=0; i<n; i++) 
-		if (!status[i] && (minVertex == -1 || distance[i] < distance[minVertex]))
+		if (!status[i] && distance[i] < distance[minVertex])
 			minVertex = i;
 
 	return minVertex;
@@ -32,6 +32,13 @@ void dijkstra(vector<vector<int> > graph, int n) {
 	distance[0] = 0;
 
 	for (int i=0; i<n-1; i++) {
+
+		for (int a=0; a<distance.size(); a++) 
+			(distance[a] == INT_MAX) ?
+				cout << "INF" << "\t":
+				cout << distance[a] << "\t";
+		
+		cout << endl;
 
 		minVertex = findMinVertex(distance, status, n);
 		status[minVertex] = true;
@@ -79,9 +86,11 @@ int main() {
 		for (int j=0; j<n; j++) 
 			cout << graph[i][j] << "\t";
 		cout << endl;
-	}
+	} cout << endl << endl;
 
 	dijkstra(graph, n);
+
+	graph.clear();
 
 	return 0;
 }
