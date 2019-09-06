@@ -1,66 +1,53 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-struct timeLine {
+bool mySort(pair<int, int> a, pair<int, int> b) {
 
-	int companies;
-	int end;
-	bool flag;
-	bool free;
+	if (a.first < b.first)
+		return true;
 
-	timeLine(int companies, int end) : flag(false), free(false) {}
-};
+	if (a.first > b.first)
+		return false;
+
+	if (a.first == b.first)
+		if (a.second < b.second)
+			return false;
+		else 
+			return true;
+}
 
 int maxEvents(vector<int> arrival, vector<int> duration) {
 
-	vector<timeLine> posibilities;
-	int maxComp = -1;
+	if (arrival.size() == 1)
+		return 1;
 
-	posibilities.push_back(timeLine(1, arrival[0]+duration[0]));
+	vector<pair<int, int>> aux;
+	vector<int> sum(arrival.size());
+	int res = 0;
+	int last = -1;
 
-	for (int i=1; i<arrival.size(); i++) {
+	for (int i=0; i<arrival.size(); i++) 
+		aux.push_back(pair<int, int> (arrival[i], duration[i]));
 
-		for (int j=0; j<posibilities.size(); j++) {
+	sort(aux.begin(), aux.end(), mySort);
 
-			// Timeline is free
-			if (posibilities[j].free) {
-				posibilities[j].end = arrival[i]+duration[i];
-				posibilities[j].free = false;
-			}
+	for (int i=0; i<aux.size(); i++) {
+		sum[i] = aux[i].first+aux[i].second;
+		cout << sum[i] << " ";
+	} cout << endl;
 
-			// Check is timeline is going to be free
-			else if (posibilities[j].end <= arrival[i]) {
-				posibilities[j]
-			}
-
-			// Create a new timeLine
-			if (arrival[i] >= posibilities[j].end && !posibilities[j].flag) {
-				posibilities.push_back(timeLine(posibilities[j].companies-1, arrival[i]+duration[i]));
-				posibilities[j].flag = true;
-			}
-
-			// else if (arrival[i] >= posibilities[j].end) {
-			// 	posibilities[j].end = arrival[i] + duration[i];
-			// 	posibilities[j].flag = false;
-			// }
-
-			// current timeLine is free
-			else {
-				posibilities[j].end = arrival[i] + duration[i];
-				posibilities[j].companies++;
-				posibilities[j].flag = false;
-			}
+	for (int i=0; i<sum.size(); i++){
+		
+		if (last < sum[i]) {
+			last = sum[i];
+			res++;
 		}
 	}
 
-	for (int i=0; i<posibilities.size(); i++)
-		maxComp = max(maxComp, posibilities[i].companies);
-
-	posibilities.clear();
-
-	return maxComp;
+	return res;
 }
 
 int main() {
@@ -69,16 +56,10 @@ int main() {
 	vector<int> duration;
 
 	arrival.push_back(1);
-	arrival.push_back(3);
-	arrival.push_back(3);
-	arrival.push_back(5);
-	arrival.push_back(7);
+	arrival.push_back(1);
 
-	duration.push_back(2);
-	duration.push_back(2);
 	duration.push_back(1);
-	duration.push_back(2);
-	duration.push_back(1);
+	duration.push_back(5);
 
 	cout << maxEvents(arrival, duration) << endl;
 
