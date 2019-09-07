@@ -23,7 +23,6 @@ int backtracking(vector<int> nums, int i) {
 }
 
 int getMax(vector<int> nums) {
-
 	return backtracking(nums, nums.size());
 }
 
