@@ -16,15 +16,18 @@ int max(int a, int b) {
 // KnapSack problem
 int knapSack(int W, vector<int> weightThing, vector<int> values, int i) {  
 
+	// To end recursivity
 	if (i == 0 || W == 0)  
 		return 0;  
 
+	// To end recursivity
 	if (weightThing[i-1] > W)  
 		return knapSack(W, weightThing, values, i-1);  
-	  
+	
+
 	else return max(values[i-1]+knapSack(W-weightThing[i-1], weightThing, values, i-1), knapSack(W, weightThing, values, i-1) );  
-}  
-  
+}
+
 int main() {
 
 	vector<int> values;
