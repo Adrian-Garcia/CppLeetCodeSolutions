@@ -15,8 +15,8 @@ int jumpingOnClouds(vector<int> c) {
 
 		else {
 			acum+=a/2;
-			a=0;
 			acum++;
+			a=0;
 		}
 	}
 
