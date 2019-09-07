@@ -7,8 +7,6 @@ using namespace std;
 // Get maximum value of two numbers
 int max(int a, int b) { 
 
-	cout << a << " " << b << endl;
-
 	return (a > b) ?
 		a : b; 
 }
@@ -23,21 +21,23 @@ int knapSack(int W, vector<int> weightThing, vector<int> values, int i) {
 	// To end recursivity
 	if (weightThing[i-1] > W)  
 		return knapSack(W, weightThing, values, i-1);  
-	
 
 	else return max(values[i-1]+knapSack(W-weightThing[i-1], weightThing, values, i-1), knapSack(W, weightThing, values, i-1) );  
 }
 
 int main() {
 
-	vector<int> values;
-	vector<int> weightThing;
-	int W = 12; 		// Weight
+	vector<int> values;			// Value of things
+	vector<int> weightThing;	// Weight of indivudual things
+	int W = 12; 				// Weight
+
 	
+	values.push_back(20);
 	values.push_back(1);
 	values.push_back(2);
 	values.push_back(3);
 
+	weightThing.push_back(300000);
 	weightThing.push_back(5);
 	weightThing.push_back(6);
 	weightThing.push_back(7);
