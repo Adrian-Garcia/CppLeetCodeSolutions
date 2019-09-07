@@ -12,29 +12,21 @@
 
 using namespace std;
 
-void findNum(vector<int> v, int k, int i, int sum, bool &flag) {
-
-	if (flag)
-		return;
+bool findNum(vector<int> v, int k, int i, int sum) {
 
 	if (sum == k)
-		flag = true;
+		return true;
 
 	if (i == -1)
-		return;
+		return false;
 
 	else
-		findNum(v, k, i-1, v[i]+sum, flag); 
-		findNum(v, k, i-1, sum, flag);
+		return (findNum(v, k, i-1, v[i]+sum) || findNum(v, k, i-1, sum));
 }
 
 bool numInVector(vector<int> v, int k) {
 
-	bool flag = false;
-
-	findNum(v, k, v.size(), 0, flag);
-	
-	return flag;
+	return findNum(v, k, v.size(), 0);
 }
 
 int main() {
