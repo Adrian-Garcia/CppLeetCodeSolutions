@@ -18,8 +18,10 @@ int anagramNum(map<char, vector<int> > places, string word) {
 
 	string look;
 
-	
+	for (int i=0; i<word.size(); i++) {
 
+		look.push_back(word[i]);
+	}
 }
 
 vector<int> anagrams(vector<string> words) {
