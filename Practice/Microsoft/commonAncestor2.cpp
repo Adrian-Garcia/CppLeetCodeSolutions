@@ -81,17 +81,8 @@ Node* findCommonAncestor(Node *pRoot, Node *p1, Node *p2) {
 	flag = false;
 	preOrder(pRoot, p2->val, aux2, path2, flag);
 
-	cout << endl;
-	for (int i=0; i<path1.size(); i++)
-		cout << path1[i] << " ";
-
-	cout << endl;
-	for (int i=0; i<path2.size(); i++)
-		cout << path2[i] << " ";	 
-
 	int limit = max(path1.size(), path2.size());
 	int lastFather;
-
 
 	for (int i=0; i<limit; i++) {
 
@@ -101,7 +92,6 @@ Node* findCommonAncestor(Node *pRoot, Node *p1, Node *p2) {
 		else
 			break;
 	}
-
 
 	Node* a = new Node(lastFather);
 	return a;
