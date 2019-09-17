@@ -9,13 +9,11 @@
 
 		Output:
 			[
-			  ["ate","eat","tea"],
-			  ["nat","tan"],
-			  ["bat"]
+				["ate","eat","tea"],
+				["nat","tan"],
+				["bat"]
 			]
-
 */
-
 #include <iostream>
 #include <vector>
 #include <string>
