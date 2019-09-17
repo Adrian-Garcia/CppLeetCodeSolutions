@@ -46,12 +46,6 @@ vector<vector<string> > groupAnagrams(vector<string>& strs) {
 	string curr;
 	int counter;
 
-	if (strs.size() == 0) 
-		return res;
-
-	if (strs.size() == 1 && strs[0] == "")
-		return res; 
-
 	for (int i=0; i<strs.size(); i++)
 		words.push_back(Word(strs[i]));
 
@@ -60,7 +54,7 @@ vector<vector<string> > groupAnagrams(vector<string>& strs) {
 
 	sort(words.begin(), words.end(), wordsOrder);
 
-	curr = "";
+	curr = "asdasdasdasd";
 	counter = -1;
 
 	for (int i=0; i<words.size(); i++) {
@@ -76,7 +70,7 @@ vector<vector<string> > groupAnagrams(vector<string>& strs) {
 			res.push_back(vector<string>());
 			res[counter].push_back(words[i].unorder);
 		}
-	} 
+	}
 
 	return res;
 }
