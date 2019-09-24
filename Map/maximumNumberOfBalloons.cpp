@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <vector>
 #include <limits>
 #include <map>
 
@@ -7,7 +9,7 @@ using namespace std;
 int maxNumberOfBalloons(string text) {
 
 	int min = INT_MAX;
-	vector< <pair<char, int> > balloon;
+	vector< pair <char, int> > balloon; 
 	map<char, int> mText;
 
 	balloon.push_back(pair<char, int> ('b',1));
@@ -20,7 +22,7 @@ int maxNumberOfBalloons(string text) {
 
 	for (int i=0; i<text.length(); i++) {
 
-		it.find(text[i]);
+		it = mText.find(text[i]);
 
 		if (it != mText.end())
 			it->second++;
@@ -31,17 +33,18 @@ int maxNumberOfBalloons(string text) {
 
 	for (int i=0; i<balloon.size(); i++) {
 
-		it.find(balloon[i]->first);
+		it = mText.find(balloon[i].first);
 
 		if (it != mText.end()) {
 
-			if (it->second / balloon[i]->second < min) 
-				min = it->second / balloon[i]->second;
+			if (it->second / balloon[i].second < min) 
+				min = it->second / balloon[i].second;
 		}
 
 		else {
 			return 0;
 		}
+
 	}
 
 	return min;
@@ -49,7 +52,7 @@ int maxNumberOfBalloons(string text) {
 
 int main() {
 
-	
+	cout << maxNumberOfBalloons("leetcode") << endl;
 
 	return 0;
 }
