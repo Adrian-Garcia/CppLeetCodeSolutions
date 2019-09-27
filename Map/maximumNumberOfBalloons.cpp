@@ -35,16 +35,12 @@ int maxNumberOfBalloons(string text) {
 
 		it = mText.find(balloon[i].first);
 
-		if (it != mText.end()) {
-
+		if (it != mText.end()) 
 			if (it->second / balloon[i].second < min) 
 				min = it->second / balloon[i].second;
-		}
 
-		else {
+		else 
 			return 0;
-		}
-
 	}
 
 	return min;
