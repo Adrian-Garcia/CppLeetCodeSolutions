@@ -1,7 +1,7 @@
 /*
-Not my Dijkstra's Algorithm... Yet... 
+Not my Dijkstra's Algorithm... Yet...
 
-Got from 
+Got from
 	https://www.youtube.com/watch?v=wQIb1NonMIM
 */
 #include <iostream>
@@ -14,7 +14,7 @@ int findMinVertex(vector<int> distance, vector<bool> status, int n) {
 
 	int minVertex = -1;
 
-	for (int i=0; i<n; i++) 
+	for (int i=0; i<n; i++)
 		if (!status[i] && distance[i] < distance[minVertex])
 			minVertex = i;
 
@@ -33,37 +33,37 @@ void dijkstra(vector<vector<int> > graph, int n) {
 
 	for (int i=0; i<n-1; i++) {
 
-		for (int a=0; a<distance.size(); a++) 
+		for (int a=0; a<distance.size(); a++)
 			(distance[a] == INT_MAX) ?
 				cout << "INF" << "\t":
 				cout << distance[a] << "\t";
-		
+
 		cout << endl;
 
 		minVertex = findMinVertex(distance, status, n);
 		status[minVertex] = true;
 
 		for (int j=0; j<n; j++) {
-			
+
 			if (graph[minVertex][j] != 0 && !status[j]) {
-				
+
 				dist = distance[minVertex] + graph[minVertex][j];
-				
-				if (dist < distance[j]) 
+
+				if (dist < distance[j])
 					distance[j] = dist;
 			}
-		} 
+		}
 	}
 
 
 	cout << endl;
-	for (int i=0; i<n; i++) 
+	for (int i=0; i<n; i++)
 		cout << i << " " << distance[i] << endl;
 }
 
 int main() {
 
-	int n;			
+	int n;
 	int e;
 
 	int f;
@@ -83,7 +83,7 @@ int main() {
 
 	cout << endl;
 	for (int i=0; i<n; i++) {
-		for (int j=0; j<n; j++) 
+		for (int j=0; j<n; j++)
 			cout << graph[i][j] << "\t";
 		cout << endl;
 	} cout << endl << endl;

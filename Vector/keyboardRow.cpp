@@ -21,7 +21,7 @@ using namespace std;
 
 bool validate(vector<char> v, string word) {
 
-	int i
+	int iw
 
 	for ()
 
