@@ -29,14 +29,24 @@
 
 using namespace std;
 
+long long int fastPow(long long int b, long long int n) {
+
+	for (int i=0; i<n; i++)
+		b*=b;
+
+	return b;
+}
+
+
 int main() {
 
-	double b;
-	double k;
+	long long int b;
+	long long int k;
 	
-	int currVal;
+	long long int currVal;
+	long long int result = 0;
 
-	int res=0;
+	unsigned long long int val;
 
 	string resInString;
 
@@ -44,16 +54,19 @@ int main() {
 	cin >> k;
 
 	for (int i=0; i<k; i++) {
+		
 		cin >> currVal;
 
-		if (res + currVal * pow(b, k-i-1) > INT_MAX)
-			res = res%10;
+		val = currVal * (fastPow(b, k-i-1));
+		cout << val << " ";
 
-		else
-			res += currVal * pow(b, k-i-1);
+		if (val % 2 == 0)
+			result ++;
 	}
 
-	if (res%2 == 0)
+	cout << endl;
+
+	if (result % 2)
 		cout << "even" << endl;
 	else
 		cout << "odd" << endl;

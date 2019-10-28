@@ -1,74 +1,33 @@
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
 int main() {
 
-	double n;
-	double xCoin;
-	double yCoin;
+	unsigned long long int n;
+	unsigned long long int xCoin;
+	unsigned long long int yCoin;
 
 	cin >> n;
 	cin >> yCoin >> xCoin;
 
-	yCoin--;
-	xCoin--;
+	unsigned long long int movesWhite = 0;
+	unsigned long long int movesBlack = 0;
 
-	double xWhite = 0;
-	double yWhite = 0;
-	double movesWhite = 0;
+	movesWhite = min(xCoin, yCoin) - 1;
+	movesWhite += max(xCoin, yCoin) - min(xCoin, yCoin);
 
-	double xBlack = n-1;
-	double yBlack = n-1;
-	double movesBlack = 0;
+	movesBlack = n - max(xCoin, yCoin);
+	movesBlack += max(xCoin, yCoin) - min(xCoin, yCoin);
 
-	// White king moves in diagonal
-	while (yCoin > yWhite && xCoin > xWhite) {
+	// cout << movesWhite << " " << movesBlack << endl;
 
-		xWhite++;
-		yWhite++;
-		movesWhite++;
-	}
-
-	// white king moves in y
-	while (yCoin > yWhite) {
-		yWhite++;
-		movesWhite++;
-	}
-
-	// white king moves in x 
-	while (xCoin > xWhite) {
-		xWhite++;
-		movesWhite++;
-	}
-
-	// ---------------------------------------------
-
-	// Black king moves in diagonal
-	while (yCoin < yBlack && xCoin < xBlack) {
-		xBlack--;
-		yBlack--;
-		movesBlack++;
-	}
-
-	// white king moves in y
-	while (yCoin < yBlack) {
-		yBlack--;
-		movesBlack++;
-	}
-
-	// white king moves in x 
-	while (xCoin < xBlack) {
-		xBlack--;
-		movesBlack++;
-	}
-
-	if (movesWhite <= movesBlack) 
+	if (movesWhite <= movesBlack)
 		cout << "White" << endl;
+
 	else
 		cout << "Black" << endl;
-
-
 
 	return 0;
 }
