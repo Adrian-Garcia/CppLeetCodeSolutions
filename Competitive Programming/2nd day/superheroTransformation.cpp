@@ -11,16 +11,20 @@ bool isVowel(char letter) {
 
 int main() {
 	
-	char superHero1[1000];
-	char superHero2[1000];
+	string superHero1;
+	string superHero2;
 
 	int i=0;
+	int j=0;
 
 	bool flag = true;
 
 	cin >> superHero1 >> superHero2;
 
-	while (superHero1[i] && superHero2[i] && flag) {
+	if (superHero1.length() != superHero2.length()) 
+		flag = false;
+
+	while (superHero1[i] && superHero2[j] && flag) {
 		if (isVowel(superHero1[i]) != isVowel(superHero2[i]))
 			flag = false;
 		i++;
