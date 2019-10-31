@@ -6,52 +6,49 @@ using namespace std;
 int main () {
 
 	unsigned long long int n;	// Numbers in the array
-
+	
 	bool flag = true;
-
-	unsigned long long int prevMin;
-	unsigned long long int prevMax;
 
 	cin >> n;
 
-	vector<unsigned long long int> v(n);
-
-	int i=1;
-	int j=n-2;
+	vector<long long int> v(n);
 
 	for (int i=0; i<n; i++) 
 		cin >> v[i];
 
-	prevMin = v[0];
-	prevMax = v[n-1];
+	long long int maxNum = v[0];	
+	unsigned long long int maxPos = 0;
+	unsigned long long int right;
 
-	while (prevMin < v[i] && i<n) {
-		prevMin = v[i];
-		i++;
-	} i--;
+	for (int i=0; i<n; i++) {
 
-	while (prevMax < v[j] && j>=0) {
-		prevMax = v[j];
-		j--;
-	} j++;
-
-	if (v[i] < v[i-1] || v[j] < v[j+1]) {
-		flag = false;
+		if (v[i] > maxNum) {
+			maxNum = v[i];
+			maxPos = i;
+		}
 	}
 
-	cout << endl;
-	cout << i << " " << j << endl;
-	cout << v[i] << " " << v[j] << endl << endl;
 
-	int prev = v[i];
+	right = maxPos;
 
-	for (int a=i; a<j; a++) {
-		if (prev != v[a])
+	for (int i=maxPos; i<n; i++) {
+
+		if (v[i] == maxNum) 
+			right = i;
+		
+		else
+			break;
+	} 
+
+	// cout << maxPos << " " << right;
+
+	for (int i=maxPos; i>0 && flag; i--) 
+		if (v[i-1] >= v[i])
 			flag = false;
 
-		cout << v[i] << " ";
-	}
-
+	for (int i=right; i<n-1 && flag; i++)
+		if (v[i+1] >= v[i])
+			flag = false;
 
 	(flag) ?
 		cout << "YES" << endl:
