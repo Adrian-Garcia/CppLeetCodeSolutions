@@ -17,8 +17,6 @@ bool search(long long int r) {
 
 	string num = convert.str();
 
-	cout << endl << endl << num << endl << endl;
-
 	for (int i=0; i<num.length() && !found; i++) {
 		
 		it = s.find(num[i]);
@@ -30,12 +28,12 @@ bool search(long long int r) {
 			found = true;
 	}
 
-	it = s.find(num[num.size()-1]);
+	if (found)
+		return false;
 
-	if (it != s.end())
-		found = false;
+	else
+		return true;
 
-	return !found;
 }
 
 int main() {
@@ -50,12 +48,11 @@ int main() {
 	cin >> l >> r;
 
 	for (i=l; i<=r && !flag; i++) {
-		flag = search(r);
+		flag = search(i);
 	}
 
-
 	if (flag)
-		cout << i << endl;
+		cout << i-1 << endl;
 
 	else
 		cout << -1 << endl;
